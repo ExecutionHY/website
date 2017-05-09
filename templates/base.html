@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>{% block title %}{% endblock %} -- a django blog</title>
+    <title>{% block title %}{% endblock %}</title>
 
 <link href="/static/css/rst.css" rel="stylesheet" type="text/css">
 <link href="/static/css/poole.css" rel="stylesheet" type="text/css">
@@ -16,33 +16,31 @@
 <link href="/static/css/code.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700%7CAbril+Fatface">
 <meta content="#5670d4" name="theme-color">
-<link rel="alternate" type="application/rss+xml" title="RSS" href="rss.xml">
-<link rel="canonical" href="https://example.com/index.html">
 
 </head>
+
 <body class="">
-<div class="sidebar">
+<div class="sidebar" style="background-image:url('/static/img/_side.jpg')">
 <div class="container sidebar-sticky">
 <div class="sidebar-about">
 
-<h1 id="brand"><a href="/" title="Execution's Website" rel="home">
+<h1 id="brand"><a href="/" title="Execution's Website" rel="home" style="text-decoration:none;">
 <span id="blog-title">Execution's Website</span>
 </a></h1>
 
-<p class="lead">This is a personal website for Execution.
-Contact: executionhy@gmail.com</p>
+<p class="lead">This is a personal website for Execution.</p>
 </div>
 
 
 <nav id="menu" role="navigation" class="sidebar-nav">
-  <a class="sidebar-nav-item" href="blog/"><li>Blog</li></a>
-  <a class="sidebar-nav-item" href="prose/"><li>Prose</li></a>
-  <a class="sidebar-nav-item" href="works/"><li>Works</li></a>
+  <a class="sidebar-nav-item" href="/blog/"><li>Blog</li></a>
+  <a class="sidebar-nav-item" href="/prose/"><li>Prose</li></a>
+  <a class="sidebar-nav-item" href="/works/"><li>Works</li></a>
 </nav>
 
 
     <footer id="footer"><span class="copyright">
-Contents © 2017 <a href="/">Your Name</a> - Powered by <a href="/">Execution</a>
+Contents © 2017 <a href="/">Exeuction</a> <br /> Powered by <a href="https://www.djangoproject.com/download/">Django</a>
 </span>
 </footer>
 </div>
