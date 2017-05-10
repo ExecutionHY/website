@@ -18,4 +18,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^$', 'blog.views.blog', name='blog'),
+    url(r'^post/(?P<pk>\d+)/$', 'blog.views.post', name='post'),
 ]

@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from blog.models import Post, Category
 
@@ -13,7 +13,21 @@ def blog(request):
     }
 
     return render_to_response(
-        'blog.html',
+        'blog_home.html',
+        ctx,
+        context_instance=RequestContext(request)
+    )
+
+
+def post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    ctx = {
+        "post": post,
+    }
+
+    return render_to_response(
+        'blog_post.html',
         ctx,
         context_instance=RequestContext(request)
     )
