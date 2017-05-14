@@ -1,10 +1,138 @@
 {% extends "base.html" %}
 
 {% block title %}Execution's Website{% endblock %}
+
+{% block sidebar %}
+    <li><a href="#intro" id="intro-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Intro</span></a></li>
+    <li><a href="#display" id="display-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Display</span></a></li>
+    <li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-user">About Me</span></a></li>
+    <li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact</span></a></li>
+
+{% endblock %}
+
+
+
 {% block content %}
 
-    <image src="/static/img/home.jpg" />
+<!-- Intro -->
+    <section id="intro" class="one dark cover" style="background-image: url('/static/img/intro.jpg')">
+        <div class="container">
 
-    Hello Execution!
+            <header>
+                <h2 class="alt">Hello World!<br />
+                    This is a personal website build by <strong>Execution</strong>.</h2>
+                <p>Enjoy!</p>
+            </header>
+
+            <footer>
+                <a href="#display" class="button"">See More</a>
+            </footer>
+
+        </div>
+    </section>
+
+<!-- Portfolio -->
+    <section id="display" class="two">
+        <div class="container">
+
+            <header>
+                <h2>Display</h2>
+            </header>
+
+            <div class="row">
+                <div class="4u 12u$(mobile)">
+                    <article class="item">
+                        <a href="#" class="image fit"><img src="/static/img/pic02.jpg" alt="" /></a>
+                        <header>
+                            <h3>Ipsum Feugiat</h3>
+                        </header>
+                    </article>
+                    <article class="item">
+                        <a href="#" class="image fit"><img src="/static/img/pic03.jpg" alt="" /></a>
+                        <header>
+                            <h3>Rhoncus Semper</h3>
+                        </header>
+                    </article>
+                </div>
+                <div class="4u 12u$(mobile)">
+                    <article class="item">
+                        <a href="#" class="image fit"><img src="/static/img/pic04.jpg" alt="" /></a>
+                        <header>
+                            <h3>Magna Nullam</h3>
+                        </header>
+                    </article>
+                    <article class="item">
+                        <a href="#" class="image fit"><img src="/static/img/pic05.jpg" alt="" /></a>
+                        <header>
+                            <h3>Natoque Vitae</h3>
+                        </header>
+                    </article>
+                </div>
+                <div class="4u$ 12u$(mobile)">
+                    <article class="item">
+                        <a href="#" class="image fit"><img src="/static/img/pic06.jpg" alt="" /></a>
+                        <header>
+                            <h3>Dolor Penatibus</h3>
+                        </header>
+                    </article>
+                    <article class="item">
+                        <a href="#" class="image fit"><img src="/static/img/pic07.jpg" alt="" /></a>
+                        <header>
+                            <h3>Orci Convallis</h3>
+                        </header>
+                    </article>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+<!-- About Me -->
+    <section id="about" class="three">
+        <div class="container">
+
+            <header>
+                <h2>About Me</h2>
+            </header>
+
+            <a href="#" class="image featured"><img src="/static/img/pic08.jpg" alt="" /></a>
+
+            <p>No comment. Five can tell.</p>
+
+
+
+
+
+        </div>
+    </section>
+
+<!-- Contact -->
+    <section id="contact" class="four">
+        <div class="container">
+
+            <header>
+                <h2>Contact</h2>
+            </header>
+
+            <p>You can leave a message to me here.</p>
+
+            <form method="post" action="#">
+                <div class="row">
+                    <div class="6u 12u$(mobile)"><input type="text" name="name" placeholder="Name" /></div>
+                    <div class="6u$ 12u$(mobile)"><input type="text" name="email" placeholder="Email" /></div>
+                    <div class="12u$">
+                        <textarea name="message" placeholder="Message"></textarea>
+                    </div>
+                    <div class="12u$">
+                        <input type="submit" value="Send Message" />
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </section>
+
+
 
 {% endblock %}
