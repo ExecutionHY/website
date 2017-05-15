@@ -3,22 +3,35 @@
 {% block title %}Execution's Blogs{% endblock %}
 
 {% block sidebar %}
-    <li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
+    <li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-reply">Home</span></a></li>
     <li><a href="#search" id="search-link" class="skel-layers-ignoreHref"><span class="icon fa-search">Search</span></a></li>
     <li><a href="#list" id="list-link" class="skel-layers-ignoreHref"><span class="icon fa-list">List</span></a></li>
+    <br />
+    <li><span> </span></li>
+    <li><a href="/admin/blog/post/add/" id="add-link" class="skel-layers-ignoreHref"><span class="icon fa-plus">New Post</span></a></li>
 
 {% endblock %}
 
 {% block content %}
 
 
-    <!-- Intro -->
-    <section id="intro" class="one dark cover">
+    <!-- Search -->
+    <section id="search" class="one dark cover" height="100px">
         <div class="container">
+            <header><h2>Blog</h2></header>
+            <form method="post" action="#">
+                <div class="row">
+                    <div class="8u 12u$(mobile)"><input type="text" name="keyword" placeholder="Keyword" /></div>
+                    <div class="4u$ 12u$(mobile)"><input type="submit" value="Search" /></div>
+                </div>
 
+            </form>
+        </div>
+    </section>
 
-            <a href="/admin/blog/post/add/" class="btn" style="text-decoration:none;">New Post<span class="arrow">❯</span></a>
-
+    <!-- List -->
+    <section id="list" class="two">
+        <div class="container">
 
             {% for post in posts %}
             <div class="post">
