@@ -1,13 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Execution's Blogs{% endblock %}
+{% block title %}X-News{% endblock %}
 
 {% block sidebar %}
     <li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Home</span></a></li>
     <li><a href="#search" id="search-link" class="skel-layers-ignoreHref"><span class="icon fa-search">Search</span></a></li>
     <li><a href="#list" id="list-link" class="skel-layers-ignoreHref"><span class="icon fa-list">List</span></a></li>
-    <br />
-    <li><a href="/admin/blog/post/add/" id="add-link" class="skel-layers-ignoreHref"><span class="icon fa-plus">New Post</span></a></li>
 
 {% endblock %}
 
@@ -17,7 +15,7 @@
     <!-- Search -->
     <section id="search" class="top dark center" height="100px">
         <div class="container">
-            <header><h2>Blog</h2></header>
+            <header><h2>X-News</h2></header>
             <form method="post" action="#">
                 <div class="row">
                     <div class="8u 12u$(mobile)"><input type="text" name="keyword" placeholder="Keyword" /></div>
@@ -34,15 +32,11 @@
 
             {% for post in posts %}
             <div class="post">
-                <h3><a href="{% url 'blog.views.blog_post' post.id %}" style="text-decoration:none;">{{ post.title }}</a></h3>
+                <h3><a href="#" style="text-decoration:none;">News Title</a></h3>
                 <div class="info">
-                    <span class="category" style="color: #ff9900;">{{ post.category }}</span>
-                    <span class="author" style="color: #4a86e8">{{ post.author }}</span>
-                    <span class="pub_date" style="color: #6aa84f">{{ post.publication_date|date:"Y-m-d H:i" }}</span>
-                    <span class="mod_date" style="color: #000000"> | Updated: {{ post.modification_date|date:"Y-m-d H:i" }}</span>
                 </div>
                 <div class="summary">
-                    {{ post.content|slice:"64" }}...
+                    xxxxxxx
                 </div>
             </div>
             {% endfor %}

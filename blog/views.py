@@ -5,7 +5,7 @@ from blog.models import Post, Category
 # Create your views here.
 
 
-def blog(request):
+def blog_home(request):
     posts = Post.objects.all()
 
     ctx = {
@@ -19,7 +19,7 @@ def blog(request):
     )
 
 
-def post(request, pk):
+def blog_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
 
     ctx = {

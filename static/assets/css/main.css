@@ -2107,6 +2107,12 @@
 					color: deepskyblue;
 				}
 
+			#nav ul li a:hover {
+				background: #31383c;
+			}
+
+
+
 /* Footer */
 
 	#footer {
@@ -2148,7 +2154,6 @@
 			overflow: hidden;
 			padding: 4em 0;
 			box-shadow: inset 0 1px 0 0 rgba(0, 0, 0, 0.05), inset 0 0.1em 0.1em 0 rgba(0, 0, 0, 0.025);
-			text-align: center;
 			background-image: url("images/overlay.png");
 		}
 
@@ -2181,20 +2186,24 @@
 				background-position: center center;
 			}
 
-			#main > section.one {
+			#main > section.center {
+				text-align: center;
+			}
+
+			#main > section.top {
 				background-color: #81918E;
 				background-image: url("/static/img/banner.jpg");
 			}
 
-			#main > section.two {
+			#main > section.body {
 				background-color: #f5fafa;
 			}
 
-			#main > section.three {
+			#main > section.about {
 				background-color: #ecf1f1;
 			}
 
-			#main > section.four {
+			#main > section.contact {
 				background-color: #e8edec;
 			}
 

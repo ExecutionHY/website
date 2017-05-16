@@ -3,8 +3,7 @@
 {% block title %}Execution's Blogs{% endblock %}
 
 {% block sidebar %}
-    <li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-reply-all">Home</span></a></li>
-    <li><a href="/blog" id="blog-link" class="skel-layers-ignoreHref"><span class="icon fa-reply">Blog</span></a></li>
+    <li><a href="/blog" id="blog-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Blog</span></a></li>
     <li><a href="#post" id="post-link" class="skel-layers-ignoreHref"><span class="icon fa-book">Post</span></a></li>
     <li><a href="#comment" id="comment-link" class="skel-layers-ignoreHref"><span class="icon fa-comment">Comment</span></a></li>
     <br />
@@ -18,7 +17,7 @@
 
     <section id="post">
         <div class="container">
-            <h3><a href="{% url 'blog.views.post' post.id %}" style="text-decoration:none;">{{ post.title }}</a></h3>
+            <h3><a href="{% url 'blog.views.blog_post' post.id %}" style="text-decoration:none;">{{ post.title }}</a></h3>
             <div class="info">
                 <span class="category" style="color: #ff9900;">{{ post.category }}</span>
                 <span class="author" style="color: #4a86e8">{{ post.author }}</span>
