@@ -18,4 +18,7 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^$', 'xnews.views.xnews_home', name='xnews_home'),
+    url(r'^login/$', 'xnews.views.xnews_login', name='xnews_login'),
+    url(r'^register/$', 'xnews.views.xnews_register', name='xnews_register'),
+    url(r'^logout/$', 'xnews.views.xnews_logout', name='xnews_logout'),
 ]

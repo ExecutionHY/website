@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}X-News{% endblock %}
+
+{% block user %}
+    <span class="image avatar48"><img src="/static/img/tourist.jpg" alt="" /></span>
+    <h1 id="title">Tourist</h1>
+    <p>Discription.</p>
+{% endblock %}
+
+{% block sidebar %}
+    <li><a href="/xnews/login/" id="login-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Login</span></a></li>
+    <li><a href="/xnews/register/" id="register-link" class="skel-layers-ignoreHref"><span class="icon fa-user-plus">Register</span></a></li>
+    <br />
+    <li><a href="/xnews/" id="xnews-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Xnews</span></a></li>
+
+
+{% endblock %}
+
+{% block content %}
+
+
+
+<!-- Contact -->
+    <section id="content" class="body center">
+        <div class="container">
+
+            <header>
+                <h2>Register</h2>
+            </header>
+            {% if error %}
+                <p>Error: {{ error }}</p>
+            {% endif %}
+            <p>Register to get more service.</p>
+
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="12u$">
+                        <input type="text" name="email" placeholder="*Email" />
+                    </div>
+                    <div class="12u$">
+                        <input type="text" name="username" placeholder="*Username" />
+                    </div>
+                    <div class="12u$">
+                        <input type="password" name="password" placeholder="*Password" />
+                    </div>
+                    <div class="12u$">
+                        <input type="password" name="password2" placeholder="*Password Again" />
+                    </div>
+                    <label><input id="agree" type="radio" value=""  onclick="change_button()"/>I agree whatever you says.</label>
+
+                    <script>
+                        var state = false;
+                        function change_button() {
+                            if (state) {
+                                document.getElementById('agree').checked = false;
+                                state = false;
+                                document.getElementById('register').disabled = true;
+                            }
+                            else {
+                                state = true;
+                                document.getElementById('register').disabled = false;
+                                // <html> disabled = false means disabled, js disabled = false means enabled.
+                            }
+                        }
+                    </script>
+
+                    <div class="12u$">
+                        <input type="submit" id="register" value="Register" disabled="false"/>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </section>
+
+
+{% endblock %}

@@ -2,7 +2,27 @@
 
 {% block title %}X-News{% endblock %}
 
+{% block user %}
+    {% if user %}
+        <span class="image avatar48"><img src="/static/img/user.jpg" alt="" /></span>
+        <h1 id="title">{{ user.username }}</h1>
+        <p>{{ user.introduction }}</p>
+    {% else %}
+        <span class="image avatar48"><img src="/static/img/tourist.jpg" alt="" /></span>
+        <h1 id="title">Tourist</h1>
+        <p>Introduction.</p>
+    {% endif %}
+{% endblock %}
+
 {% block sidebar %}
+    {% if user %}
+        <li><a href="/xnews/logout/" id="logout-link" class="skel-layers-ignoreHref"><span class="icon fa-user-times">Logout</span></a></li>
+    {% else %}
+        <li><a href="/xnews/login/" id="login-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Login</span></a></li>
+        <li><a href="/xnews/register/" id="register-link" class="skel-layers-ignoreHref"><span class="icon fa-user-plus">Register</span></a></li>
+    {% endif %}
+    <br />
+
     <li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Home</span></a></li>
     <li><a href="#search" id="search-link" class="skel-layers-ignoreHref"><span class="icon fa-search">Search</span></a></li>
     <li><a href="#list" id="list-link" class="skel-layers-ignoreHref"><span class="icon fa-list">List</span></a></li>
@@ -10,7 +30,6 @@
 {% endblock %}
 
 {% block content %}
-
 
     <!-- Search -->
     <section id="search" class="top dark center" height="100px">
@@ -23,6 +42,34 @@
                 </div>
 
             </form>
+        </div>
+    </section>
+
+    <!-- Display -->
+    <section id="category" class="body center">
+        <div class="container">
+
+            <div class="row">
+                <div class="6u 12u$(mobile)">
+                    <article class="item">
+                        <a href="/blog" class="image fit"><img src="/static/img/pic02.jpg" alt="" /></a>
+                        <header>
+                            <h3>Blog</h3>
+                        </header>
+                    </article>
+                </div>
+                <div class="6u$ 12u$(mobile)">
+                    <article class="item">
+                        <a href="/blog" class="image fit"><img src="/static/img/pic02.jpg" alt="" /></a>
+                        <header>
+                            <h3>Blog</h3>
+                        </header>
+                    </article>
+                </div>
+
+            </div>
+
+
         </div>
     </section>
 

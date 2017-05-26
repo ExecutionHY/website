@@ -16,19 +16,22 @@ class Migration(migrations.Migration):
             name='Category',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=128, verbose_name='title')),
+                ('category', models.CharField(max_length=128, verbose_name='category')),
             ],
+            options={
+                'ordering': ['-id'],
+            },
         ),
         migrations.CreateModel(
             name='Post',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('title', models.CharField(max_length=128, verbose_name='title')),
-                ('publish_date', models.DateTimeField(auto_now_add=True)),
-                ('modify_date', models.DateTimeField(auto_now=True)),
+                ('publication_date', models.DateTimeField(auto_now_add=True)),
+                ('modification_date', models.DateTimeField(auto_now=True)),
                 ('content', models.TextField(verbose_name='content')),
                 ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
-                ('category', models.ForeignKey(verbose_name=b'title', to='blog.Category')),
+                ('category', models.ForeignKey(verbose_name=b'category', to='blog.Category')),
             ],
             options={
                 'ordering': ['-id'],
@@ -38,8 +41,11 @@ class Migration(migrations.Migration):
             name='Tag',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('title', models.CharField(max_length=128, verbose_name='title')),
+                ('tag', models.CharField(max_length=128, verbose_name='tag')),
             ],
+            options={
+                'ordering': ['-id'],
+            },
         ),
         migrations.AddField(
             model_name='post',

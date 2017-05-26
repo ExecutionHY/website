@@ -2,6 +2,12 @@
 
 {% block title %}Execution's Website{% endblock %}
 
+{% block user %}
+    <span class="image avatar48"><img src="/static/img/avatar.jpg" alt="" /></span>
+    <h1 id="title">Execution</h1>
+    <p>DeadLiner</p>
+{% endblock %}
+
 {% block sidebar %}
     <li><a href="#intro" id="intro-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Introduction</span></a></li>
     <li><a href="#display" id="display-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Display</span></a></li>
@@ -10,8 +16,8 @@
     <br />
 
     <li style="text-align: center;color: rgba(255, 255, 255, 0.5);"><pre>Application</pre></li>
-    <li><a href="/blog" id="blog-link"><span class="icon fa-book">Blog</span></a></li>
-    <li><a href="/xnews" id="prose-link"><span class="icon fa-newspaper-o">X-News</span></a></li>
+    <li><a href="/blog/" id="blog-link"><span class="icon fa-book">Blog</span></a></li>
+    <li><a href="/xnews/" id="prose-link"><span class="icon fa-newspaper-o">X-News</span></a></li>
 
 {% endblock %}
 
@@ -98,7 +104,7 @@
         </div>
     </section>
 
-<!-- Contact -->
+    <!-- Contact -->
     <section id="contact" class="contact center">
         <div class="container">
 

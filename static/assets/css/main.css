@@ -1932,6 +1932,14 @@
 			background-color: skyblue;
 		}
 
+		input[type="button"]:disabled,
+		input[type="submit"]:disabled,
+		input[type="reset"]:disabled,
+		button:disabled,
+		.button:disabled {
+			background-color: lightgray;
+		}
+
 /* Item */
 
 	.item {
@@ -2108,7 +2116,7 @@
 				}
 
 			#nav ul li a:hover {
-				background: #31383c;
+				background: #292d33;
 			}
 
 

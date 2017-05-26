@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}X-News{% endblock %}
+
+{% block user %}
+    <span class="image avatar48"><img src="/static/img/tourist.jpg" alt="" /></span>
+    <h1 id="title">Tourist</h1>
+    <p>Discription.</p>
+{% endblock %}
+
+{% block sidebar %}
+    <li><a href="/xnews/login/" id="login-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Login</span></a></li>
+    <li><a href="/xnews/register/" id="register-link" class="skel-layers-ignoreHref"><span class="icon fa-user-plus">Register</span></a></li>
+    <br />
+    <li><a href="/xnews/" id="xnews-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Xnews</span></a></li>
+
+{% endblock %}
+
+{% block content %}
+
+
+
+<!-- Contact -->
+    <section id="content" class="body center">
+        <div class="container">
+
+            <header>
+                <h2>Register</h2>
+            </header>
+            {% if error %}
+                <p>Error: {{ error }}</p>
+            {% endif %}
+            <p>Register to get more service.</p>
+
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="12u$">
+                        <input type="text" name="email" placeholder="Email" />
+                    </div>
+                    <div class="12u$">
+                        <input type="password" name="password" placeholder="Password" />
+                    </div>
+
+                    <div class="12u$">
+                        <input type="submit" value="Login"/>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </section>
+
+
+{% endblock %}
