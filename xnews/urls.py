@@ -21,4 +21,5 @@ urlpatterns = [
     url(r'^login/$', 'xnews.views.xnews_login', name='xnews_login'),
     url(r'^register/$', 'xnews.views.xnews_register', name='xnews_register'),
     url(r'^logout/$', 'xnews.views.xnews_logout', name='xnews_logout'),
+    url(r'^setting/$', 'xnews.views.xnews_setting', name='xnews_setting'),
 ]

@@ -16,6 +16,7 @@
 
 {% block sidebar %}
     {% if user %}
+        <li><a href="/xnews/setting/" id="setting-link" class="skel-layers-ignoreHref"><span class="icon fa-cog">Setting</span></a></li>
         <li><a href="/xnews/logout/" id="logout-link" class="skel-layers-ignoreHref"><span class="icon fa-user-times">Logout</span></a></li>
     {% else %}
         <li><a href="/xnews/login/" id="login-link" class="skel-layers-ignoreHref"><span class="icon fa-user">Login</span></a></li>
@@ -25,6 +26,7 @@
 
     <li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Home</span></a></li>
     <li><a href="#search" id="search-link" class="skel-layers-ignoreHref"><span class="icon fa-search">Search</span></a></li>
+    <li><a href="#category" id="category-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Category</span></a></li>
     <li><a href="#list" id="list-link" class="skel-layers-ignoreHref"><span class="icon fa-list">List</span></a></li>
 
 {% endblock %}
@@ -77,13 +79,11 @@
     <section id="list" class="body">
         <div class="container">
 
-            {% for post in posts %}
-            <div class="post">
-                <h3><a href="#" style="text-decoration:none;">News Title</a></h3>
-                <div class="info">
-                </div>
+            {% for item in items %}
+            <div class="category">
+                <h3><a href="#" style="text-decoration:none;">{{ item.category }}</a></h3>
                 <div class="summary">
-                    xxxxxxx
+                    {{ item.post.title }}
                 </div>
             </div>
             {% endfor %}

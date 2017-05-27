@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}X-News{% endblock %}
+
+{% block user %}
+    <span class="image avatar48"><img src="/static/img/user.jpg" alt="" /></span>
+    <h1 id="title">{{ user.username }}</h1>
+    <p>{{ user.introduction }}</p>
+{% endblock %}
+
+{% block sidebar %}
+    <li><a href="/xnews/setting/" id="setting-link" class="skel-layers-ignoreHref"><span class="icon fa-cog">Setting</span></a></li>
+    <li><a href="/xnews/logout/" id="logout-link" class="skel-layers-ignoreHref"><span class="icon fa-user-times">Logout</span></a></li>
+
+    <br />
+    <li><a href="/xnews/" id="xnews-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Xnews</span></a></li>
+
+{% endblock %}
+
+{% block content %}
+
+
+
+<!-- Contact -->
+    <section id="content" class="body center">
+        <div class="container">
+
+            <header>
+                <h2>Setting</h2>
+            </header>
+            {% if message %}
+                <p>Message: {{ message }}</p>
+            {% endif %}
+            <p>Update your settings here.</p>
+
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="4u">User Name</div>
+                    <div class="8u$"><input type="text" name="username" value="{{ user.username }}"/></div>
+
+                    <div class="4u">Introduction</div>
+                    <div class="8u$">
+                        <textarea name="introduction">{{ user.introduction }}</textarea>
+                    </div>
+
+                    <div class="4u">Private Category List</div>
+                    <div class="8u$">
+                        {% for private_category in private_categories %}
+                            {% if private_category.count >= 0 %}
+                                <label><input type="checkbox" name="category_list" value="{{ private_category.category }}" checked="checked">{{ private_category.category }}</label>
+                            {% else %}
+                                <label><input type="checkbox" name="category_list" value="{{ private_category.category }}">{{ private_category.category }}</label>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+
+
+                    <div class="12u$">
+                        <input type="submit" value="Update"/>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </section>
+
+
+{% endblock %}
