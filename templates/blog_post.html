@@ -17,7 +17,7 @@
 
     <section id="post">
         <div class="container">
-            <h3><a href="{% url 'blog.views.blog_post' post.id %}" style="text-decoration:none;">{{ post.title }}</a></h3>
+            <h3><a href="{% url 'blog.views.blog_post' post.id %}">{{ post.title }}</a></h3>
             <div class="info">
                 <span class="category" style="color: #ff9900;">{{ post.category }}</span>
                 <span class="author" style="color: #4a86e8">{{ post.author }}</span>

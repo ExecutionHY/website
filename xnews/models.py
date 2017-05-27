@@ -65,6 +65,16 @@ class Post(models.Model):
     content = models.CharField(max_length=2048)
     category = models.ForeignKey(Category, verbose_name='category')
 
+    class Meta:
+        ordering = ['-id']
+
+    def __unicode__(self):
+        return self.title
+
+    @models.permalink
+    def get_absolute_url(self):
+        return 'title', (), {'pk': self.pk}
+
 
 class PostAdmin(admin.ModelAdmin):
     title = models.ForeignKey(Post, verbose_name='title')

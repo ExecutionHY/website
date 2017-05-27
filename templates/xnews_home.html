@@ -23,7 +23,6 @@
         <li><a href="/xnews/register/" id="register-link" class="skel-layers-ignoreHref"><span class="icon fa-user-plus">Register</span></a></li>
     {% endif %}
     <br />
-
     <li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Home</span></a></li>
     <li><a href="#search" id="search-link" class="skel-layers-ignoreHref"><span class="icon fa-search">Search</span></a></li>
     <li><a href="#category" id="category-link" class="skel-layers-ignoreHref"><span class="icon fa-th">Category</span></a></li>
@@ -37,6 +36,7 @@
     <section id="search" class="top dark center" height="100px">
         <div class="container">
             <header><h2>X-News</h2></header>
+
             <form method="post" action="#">
                 <div class="row">
                     <div class="8u 12u$(mobile)"><input type="text" name="keyword" placeholder="Keyword" /></div>
@@ -52,23 +52,17 @@
         <div class="container">
 
             <div class="row">
-                <div class="6u 12u$(mobile)">
-                    <article class="item">
-                        <a href="/blog" class="image fit"><img src="/static/img/pic02.jpg" alt="" /></a>
-                        <header>
-                            <h3>Blog</h3>
-                        </header>
-                    </article>
-                </div>
-                <div class="6u$ 12u$(mobile)">
-                    <article class="item">
-                        <a href="/blog" class="image fit"><img src="/static/img/pic02.jpg" alt="" /></a>
-                        <header>
-                            <h3>Blog</h3>
-                        </header>
-                    </article>
-                </div>
-
+                {% for item in items %}
+                    <div class="4u 12u$(mobile)">
+                        <article class="item">
+                            <a href="{% url 'xnews.views.xnews_category' item.category.pk %}" class="image fit">
+                                <img src="/static/img/cat-{{ item.category.pk }}.jpg" alt="" /></a>
+                            <header>
+                                <h3>{{ item.category }}</h3>
+                            </header>
+                        </article>
+                    </div>
+                {% endfor %}
             </div>
 
 
@@ -81,7 +75,7 @@
 
             {% for item in items %}
             <div class="category">
-                <h3><a href="#" style="text-decoration:none;">{{ item.category }}</a></h3>
+                <h3><a href="{% url 'xnews.views.xnews_category' item.category.pk %}">{{ item.category }}</a></h3>
                 <div class="summary">
                     {{ item.post.title }}
                 </div>

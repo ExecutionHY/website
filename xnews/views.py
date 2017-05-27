@@ -164,6 +164,7 @@ class SettingForm(forms.Form):
     username = forms.CharField(label='username', max_length=64)
     introduction = forms.CharField(label='introduction', max_length=128)
 
+
 def xnews_setting(request):
 
     # check if login
@@ -194,11 +195,10 @@ def xnews_setting(request):
                     if private_category.get().count >= 0:
                         private_category.update(count=-1)
 
-            user = User.objects.get(email=email)
             private_categories = PrivateCategory.objects.filter(email=user)
             ctx = {
                 'message': 'Setting Updated.',
-                'user': user,
+                'user': user.get(),
                 'private_categories': private_categories,
                 'choices': choices,
             }
@@ -209,10 +209,9 @@ def xnews_setting(request):
                 context_instance=RequestContext(request)
             )
 
-    user = User.objects.get(email=email)
     private_categories = PrivateCategory.objects.filter(email=user)
     ctx = {
-        'user': user,
+        'user': user.get(),
         'private_categories': private_categories,
     }
 
@@ -223,3 +222,51 @@ def xnews_setting(request):
     )
 
 
+def xnews_category(request, pk):
+    category = get_object_or_404(Category, pk=pk)
+    posts = category.post_set.all()
+
+    # check if login
+    email = request.COOKIES.get('email', '')
+    user = User.objects.filter(email=email)
+    if user:
+        user = user.get()
+    else:
+        user = None
+
+    ctx = {
+        'category': category,
+        'posts': posts,
+        'user': user,
+    }
+
+    return render_to_response(
+        'xnews_category.html',
+        ctx,
+        context_instance=RequestContext(request)
+    )
+
+
+def xnews_post(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    category = Category.objects.get(category=post.category)
+
+    # check if login
+    email = request.COOKIES.get('email', '')
+    user = User.objects.filter(email=email)
+    if user:
+        user = user.get()
+    else:
+        user = None
+
+    ctx = {
+        'post': post,
+        'user': user,
+        'category': category
+    }
+
+    return render_to_response(
+        'xnews_post.html',
+        ctx,
+        context_instance=RequestContext(request)
+    )

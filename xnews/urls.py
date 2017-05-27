@@ -22,4 +22,8 @@ urlpatterns = [
     url(r'^register/$', 'xnews.views.xnews_register', name='xnews_register'),
     url(r'^logout/$', 'xnews.views.xnews_logout', name='xnews_logout'),
     url(r'^setting/$', 'xnews.views.xnews_setting', name='xnews_setting'),
+
+    url(r'^category/(?P<pk>\d+)/$', 'xnews.views.xnews_category', name='xnews_category'),
+    url(r'^post/(?P<pk>\d+)/$', 'xnews.views.xnews_post', name='xnews_post'),
+
 ]
