@@ -25,5 +25,6 @@ urlpatterns = [
 
     url(r'^category/(?P<pk>\d+)/$', 'xnews.views.xnews_category', name='xnews_category'),
     url(r'^post/(?P<pk>\d+)/$', 'xnews.views.xnews_post', name='xnews_post'),
+    url(r'^search/$', 'xnews.views.xnews_search', name='xnews_search'),
 
 ]

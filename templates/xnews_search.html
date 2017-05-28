@@ -39,7 +39,7 @@
 
             <form method="get" action="/xnews/search/">
                 <div class="row">
-                    <div class="8u 12u$(mobile)"><input type="text" name="q" placeholder="Keyword" /></div>
+                    <div class="8u 12u$(mobile)"><input type="text" name="q" placeholder="{{ keyword }}" /></div>
                     <div class="4u$ 12u$(mobile)"><input type="submit" value="Search" /></div>
                 </div>
 
@@ -47,37 +47,18 @@
         </div>
     </section>
 
-    <!-- Display -->
-    <section id="category" class="body center">
-        <div class="container">
-
-            <div class="row">
-                {% for item in items %}
-                    <div class="4u 12u$(mobile)">
-                        <article class="item">
-                            <a href="{% url 'xnews.views.xnews_category' item.category.pk %}" class="image fit">
-                                <img src="/static/img/cat-{{ item.category.pk }}.jpg" alt="" /></a>
-                            <header>
-                                <h3>{{ item.category }}</h3>
-                            </header>
-                        </article>
-                    </div>
-                {% endfor %}
-            </div>
-
-
-        </div>
-    </section>
 
     <!-- List -->
     <section id="list" class="body">
         <div class="container">
 
-            {% for item in items %}
-            <div class="category">
-                <h3><a href="{% url 'xnews.views.xnews_category' item.category.pk %}">{{ item.category }}</a></h3>
+            <p class="center">The results of searching "{{ keyword }}" are:</p>
+
+            {% for result in results %}
+            <div class="post">
+                <h3><a href="{% url 'xnews.views.xnews_post' result.pk %}">{{ result.title }}</a></h3>
                 <div class="summary">
-                    {{ item.post.title }}
+                    {{ result.content|slice:"64" }}...
                 </div>
             </div>
             {% endfor %}

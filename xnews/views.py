@@ -270,3 +270,44 @@ def xnews_post(request, pk):
         ctx,
         context_instance=RequestContext(request)
     )
+
+
+def xnews_search(request):
+
+    # check if login
+    email = request.COOKIES.get('email', '')
+    user = User.objects.filter(email=email)
+    if user:
+        user = user.get()
+    else:
+        user = None
+
+    request.encoding = 'utf-8'
+    if 'q' in request.GET:
+        keyword = request.GET['q'].encode('utf-8').lower()
+
+        posts = Post.objects.all()
+        results = []
+        for post in posts:
+            if keyword in post.title.lower():
+                results.append(post)
+
+        for post in posts:
+            if keyword not in post.title.lower():
+                if keyword in post.content.lower():
+                    results.append(post)
+    else:
+        results = []
+        keyword = None
+
+    ctx = {
+        'results': results,
+        'keyword': keyword,
+        'user': user,
+    }
+
+    return render_to_response(
+        'xnews_search.html',
+        ctx,
+        context_instance=RequestContext(request)
+    )
