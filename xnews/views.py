@@ -262,7 +262,7 @@ def xnews_post(request, pk):
     ctx = {
         'post': post,
         'user': user,
-        'category': category
+        'category': category,
     }
 
     return render_to_response(

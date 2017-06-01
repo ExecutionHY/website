@@ -38,10 +38,7 @@
 
             <div class="posts">
                 {% for post in posts %}
-                    <a href="{% url 'xnews.views.xnews_post' post.pk %}"><h3>{{ post.title }}</h3></a>
-                    <div class="summary">
-                        {{ post.content|slice:"64" }}...
-                    </div>
+                    <a href="{% url 'xnews.views.xnews_post' post.pk %}"><h4>{{ post.title }}</h4></a>
                 {% endfor %}
             </div>
 

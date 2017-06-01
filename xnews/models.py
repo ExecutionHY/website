@@ -8,6 +8,8 @@ from django.forms import ModelForm
 
 class Category(models.Model):
     category = models.CharField(u"category", max_length=128)
+    url_sina = models.CharField(max_length=128, default='')
+    url_xinhua = models.CharField(max_length=128, default='')
 
     class Meta:
         ordering = ['-id']
@@ -62,7 +64,8 @@ class PrivateCategoryAdmin(admin.ModelAdmin):
 
 class Post(models.Model):
     title = models.CharField(max_length=64)
-    content = models.CharField(max_length=2048)
+    time_source = models.CharField(max_length=64, default='null')
+    body = models.CharField(max_length=2048)
     category = models.ForeignKey(Category, verbose_name='category')
 
     class Meta:
