@@ -49,14 +49,13 @@ def spider():
 
         return post
 
-    def getlist_163(url):
+    def getlist_sohu(url):
         # get html
         htmldata = requests.get(url).text
         # parse the html
         soup = BeautifulSoup(htmldata,'html.parser')
         # return a list of <a>
-        tags = soup.select("div.news_title")
-        print htmldata
+        tags = soup.select("div.news-box > h4 > a")
 
         linklist = []
         for tag in tags:
@@ -65,16 +64,16 @@ def spider():
 
         return linklist
 
-    def getpost_163(url):
+    def getpost_sohu(url):
         print url
         response = requests.get(url)
         response.encoding = 'utf-8'
         htmldata = response.text
         soup = BeautifulSoup(htmldata, 'html.parser')
 
-        head = soup.select("div.post_content_main > h1")
-        time_source = soup.select("div.post_time_source")
-        body = soup.select("div.post_text")
+        head = soup.select("div.text-title > h1")
+        time_source = soup.select("div.article-info")
+        body = soup.select("article.article")
 
         post = {
             'title': head[0].get_text(),
@@ -84,65 +83,154 @@ def spider():
 
         return post
 
-    def getlist_xinhua(url):
+    def getlist_ifeng(url):
         # get html
         htmldata = requests.get(url).text
         # parse the html
         soup = BeautifulSoup(htmldata,'html.parser')
         # return a list of <a>
-        tags = soup.select("ul.newList01 > li > a")
+        tags = soup.select("div.w920 > h1 > a")
 
         linklist = []
         for tag in tags:
             link = tag.get("href")
             linklist.append(link)
 
+        tags = soup.select("div.juti_list > h3 > a")
+        for tag in tags:
+            link = tag.get("href")
+            linklist.append(link)
+
         return linklist
 
-    def getpost_xinhua(url):
+    def getpost_ifeng(url):
         print url
         response = requests.get(url)
         response.encoding = 'utf-8'
         htmldata = response.text
         soup = BeautifulSoup(htmldata, 'html.parser')
 
-        head = soup.select("div.h-title")
-        time_source = soup.select("div.h-info")
-        body = soup.find(id="p-detail")
+        head = soup.select("div.left > div > h1")
+        time_source = soup.select("p.p_time")
+        body = soup.select("div.js_selection_area")
+        post = {
+            'title': head[0].get_text(),
+            'time_source': time_source[0].get_text(),
+            'body': body[0]
+        }
 
-        # some web is not formed normally
-        if len(head) > 0:
-            post = {
-                'title': head[0].get_text(),
-                'time_source': time_source[0].get_text(),
-                'body': body
-            }
-        else:
-            post = None
         return post
 
-    categories = Category.objects.all()
-    for category in categories:
-        Post.objects.filter(category=category).delete()
+    def getlist_huanqiu(url):
+        # get html
+        htmldata = requests.get(url).text
+        # parse the html
+        soup = BeautifulSoup(htmldata,'html.parser')
+        # return a list of <a>
+        tags = soup.select("ul.listDot-box > li > a")
 
-        # spider for sina
-        linklist = getlist_sina(category.url_sina)
-        for link in linklist:
-            post = getpost_sina(link)
-            Post.objects.create(title=post.get('title'),
-                                time_source=post.get('time_source'),
-                                body=post.get('body'),
-                                category=category
-                                )
+        linklist = []
+        for tag in tags:
+            link = tag.get("href")
+            linklist.append(link)
 
-        linklist = getlist_xinhua(category.url_xinhua)
-        for link in linklist:
-            post = getpost_xinhua(link)
-            Post.objects.create(title=post.get('title'),
-                                time_source=post.get('time_source'),
-                                body=post.get('body'),
-                                category=category
-                                )
+        tags = soup.select("ul.list-box > li > a")
+        for tag in tags:
+            link = tag.get("href")
+            linklist.append(link)
+
+        return linklist
+
+    def getpost_huanqiu(url):
+        print url
+        response = requests.get(url)
+        response.encoding = 'utf-8'
+        htmldata = response.text
+        soup = BeautifulSoup(htmldata, 'html.parser')
+
+        head = soup.select("div.conText > h1")
+        pubtime = soup.select("strong.timeSummary")
+        source = soup.select("strong.fromSummary")
+        body = soup.select("div.text")
+        post = {
+            'title': head[0].get_text(),
+            'time_source': pubtime[0].get_text() + source[0].get_text(),
+            'body': body[0]
+        }
+
+        return post
+    """
+    # spider for sina-china
+    category = Category.objects.get(pk=1)
+    Post.objects.filter(category=category).delete()
+    linklist = getlist_sina('http://news.sina.com.cn/china/')
+    for link in linklist:
+        post = getpost_sina(link)
+        Post.objects.create(title=post.get('title'),
+                            time_source=post.get('time_source'),
+                            body=post.get('body'),
+                            category=category
+                            )
+    print '---'
+    # spider for sina-world
+    category = Category.objects.get(pk=2)
+    Post.objects.filter(category=category).delete()
+    linklist = getlist_sina('http://news.sina.com.cn/world/')
+    for link in linklist:
+        post = getpost_sina(link)
+        Post.objects.create(title=post.get('title'),
+                            time_source=post.get('time_source'),
+                            body=post.get('body'),
+                            category=category
+                            )
+    print '---'
+    # spider for sina-society
+    category = Category.objects.get(pk=3)
+    Post.objects.filter(category=category).delete()
+    linklist = getlist_sina('http://news.sina.com.cn/society/')
+    for link in linklist:
+        post = getpost_sina(link)
+        Post.objects.create(title=post.get('title'),
+                            time_source=post.get('time_source'),
+                            body=post.get('body'),
+                            category=category
+                            )
+    print '---'
+    # spider for 163-war
+    category = Category.objects.get(pk=4)
+    Post.objects.filter(category=category).delete()
+    linklist = getlist_sohu('http://mil.sohu.com/')
+    for link in linklist:
+        post = getpost_sohu('http:'+link)
+        Post.objects.create(title=post.get('title'),
+                            time_source=post.get('time_source'),
+                            body=post.get('body'),
+                            category=category
+                            )
+
+    # spider for ifeng-taiwan
+    category = Category.objects.get(pk=5)
+    Post.objects.filter(category=category).delete()
+    linklist = getlist_ifeng('http://news.ifeng.com/taiwan/')
+    for link in linklist:
+        post = getpost_ifeng(link)
+        Post.objects.create(title=post.get('title'),
+                            time_source=post.get('time_source'),
+                            body=post.get('body'),
+                            category=category
+                            )
+"""
+    # spider for huanqiu-ent
+    category = Category.objects.get(pk=6)
+    Post.objects.filter(category=category).delete()
+    linklist = getlist_huanqiu('http://ent.huanqiu.com/')
+    for link in linklist:
+        post = getpost_huanqiu(link)
+        Post.objects.create(title=post.get('title'),
+                            time_source=post.get('time_source'),
+                            body=post.get('body'),
+                            category=category
+                            )
 
 
 # The class must be named Command, and subclass BaseCommand
