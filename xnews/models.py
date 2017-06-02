@@ -8,7 +8,7 @@ from django.forms import ModelForm
 
 class Category(models.Model):
     category = models.CharField(u"category", max_length=128)
-    source = models.CharField(u"source", max_length=128, default='')
+    source = models.CharField(max_length=128, default='')
 
     class Meta:
         ordering = ['-id']

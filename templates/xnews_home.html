@@ -75,7 +75,9 @@
 
             {% for item in items %}
             <div class="category">
-                <h3><a href="{% url 'xnews.views.xnews_category' item.category.pk %}">{{ item.category }}</a></h3>
+               <a href="{% url 'xnews.views.xnews_category' item.category.pk %}">
+                   <h3>{{ item.category.category }}</h3><h5> - from {{ item.category.source }}</h5>
+               </a>
                 <div class="summary">
                     {{ item.post.title }}
                 </div>

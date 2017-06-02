@@ -37,8 +37,11 @@
     <section id="list" class="body">
         <div class="container">
 
-            <header><h2>{{ post.title }}</h2></header>
-
+            <header style="text-align: center"><h2>{{ post.title }}</h2></header>
+            <div class="info" style="text-align: center">
+                {{ post.time_source }}
+            </div>
+            <br />
             <div class="content">
                 {{ post.body|safe }}
             </div>

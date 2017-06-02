@@ -159,7 +159,7 @@ def spider():
         }
 
         return post
-    """
+
     # spider for sina-china
     category = Category.objects.get(pk=1)
     Post.objects.filter(category=category).delete()
@@ -171,7 +171,6 @@ def spider():
                             body=post.get('body'),
                             category=category
                             )
-    print '---'
     # spider for sina-world
     category = Category.objects.get(pk=2)
     Post.objects.filter(category=category).delete()
@@ -183,7 +182,6 @@ def spider():
                             body=post.get('body'),
                             category=category
                             )
-    print '---'
     # spider for sina-society
     category = Category.objects.get(pk=3)
     Post.objects.filter(category=category).delete()
@@ -195,7 +193,6 @@ def spider():
                             body=post.get('body'),
                             category=category
                             )
-    print '---'
     # spider for 163-war
     category = Category.objects.get(pk=4)
     Post.objects.filter(category=category).delete()
@@ -219,7 +216,7 @@ def spider():
                             body=post.get('body'),
                             category=category
                             )
-"""
+
     # spider for huanqiu-ent
     category = Category.objects.get(pk=6)
     Post.objects.filter(category=category).delete()
