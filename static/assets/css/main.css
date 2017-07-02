@@ -33,9 +33,11 @@
 		line-height: 1;
 	}
 
+	/* this hide ul bullet
 	ol, ul {
 		list-style: none;
 	}
+	*/
 
 	blockquote, q {
 		quotes: none;

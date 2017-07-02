@@ -18,11 +18,12 @@
 
 {% endblock %}
 
+{% load markup %}
 
 {% block content %}
 
     <section id="post">
-        <article class="container">
+        <div class="container">
             <h1>{{ post.title }}</h1>
             <div class="info">
                 <div class="category">
@@ -41,8 +42,11 @@
                 </div>
 
             </div>
+
+            <br />
+
             <article class="markdown-body">
-                {{ post.content|safe }}
+                {{ post.content | my_markdown }}
             </article>
         </div>
     </section>
