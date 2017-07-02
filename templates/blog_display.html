@@ -9,33 +9,29 @@
 {% endblock %}
 
 {% block sidebar %}
-    {% if is_search %} <!-- search page -->
-        <li><a href="/blog" id="blog-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Blog</span></a></li>
-    {% else %}  <!-- home page -->
-        <li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Home</span></a></li>
-    {% endif %}
-    <li><a href="#search" id="search-link" class="skel-layers-ignoreHref"><span class="icon fa-search">Search</span></a></li>
-    <li><a href="#list" id="list-link" class="skel-layers-ignoreHref"><span class="icon fa-list">List</span></a></li>
+    <li><a href="/blog" id="blog-link" class="skel-layers-ignoreHref">
+        <span class="icon fa-arrow-left">Blog</span></a></li>
     <br />
-    <li><a href="/admin/blog/post/add/" id="add-link" class="skel-layers-ignoreHref"><span class="icon fa-plus">New Post</span></a></li>
+
+    {% if categories %}
+        {% for cat in categories %}
+            <li><a href="{{ cat.get_absolute_url }}" class="skel-layers-ignoreHref
+                {% if cat == category %}active{% endif %}">
+                <span class="icon fa-circle-o">{{ cat }}</span></a></li>
+        {% endfor %}
+    {% endif %}
 
 {% endblock %}
 
+{% load markup %}
+
 {% block content %}
 
-
-    <!-- Search -->
-    <section id="search" class="top dark center">
-        <div class="container">
-            <header><h2>Blog</h2></header>
-            <form method="get" action="/blog/search/">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="12u$"><input type="search" name="q" placeholder="Search..." /></div>
-                </div>
-            </form>
-        </div>
-    </section>
+    {% if category %}
+        <section id="category" class="top dark center" height="100px">
+            <header><h2>{{ category }}</h2></header>
+        </section>
+    {% endif %}
 
     <!-- List -->
     <section id="list" class="body">
@@ -58,6 +54,5 @@
 
         </div>
     </section>
-
 
 {% endblock %}

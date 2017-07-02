@@ -1805,6 +1805,7 @@
 	}
 
 	form input[type="text"],
+	form input[type="search"],
 	form input[type="email"],
 	form input[type="password"],
 	form select,
@@ -1817,7 +1818,6 @@
 		background: #fff;
 		background: rgba(255, 255, 255, 0.75);
 		width: 100%;
-		border-radius: 0.35em;
 		padding: 0.75em 1em 0.75em 1em;
 		box-shadow: inset 0 0.1em 0.1em 0 rgba(0, 0, 0, 0.05);
 		border: solid 1px rgba(0, 0, 0, 0.15);
@@ -1837,14 +1837,19 @@
 		}
 
 	form input[type="text"],
+	form input[type="search"],
 	form input[type="email"],
 	form input[type="password"],
 	form select {
 		line-height: 1.25em;
+		-webkit-border-radius: 10em;
+		-moz-border-radius: 10em;
+		border-radius: 10em;
 	}
 
 	form textarea {
 		min-height: 14em;
+		border-radius: 1em;
 	}
 
 	form .formerize-placeholder {
@@ -1870,6 +1875,16 @@
 	form ::-moz-focus-inner {
 		border: 0;
 	}
+
+	form input[type="search"] {
+		background: rgba(255, 255, 255, 0.75) url(/static/img/search-icon.png) no-repeat right;
+		padding: 0.75em 2.25em 0.75em 1em;
+	}
+	form input[type="search"]:focus {
+		box-shadow: 0 0 2px 1px #8ebebc;
+		background: #fff url(/static/img/search-icon.png) no-repeat right;
+	}
+
 
 /* Table */
 
@@ -2591,3 +2606,62 @@
 				}
 
 	}
+
+
+/* tags */
+
+.tags {
+  list-style: none;
+  margin: 0;
+  overflow: hidden;
+  padding: 0;
+}
+
+.tags li {
+  float: left;
+}
+
+.tag {
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 20px 0 23px;
+  position: relative;
+  margin: 0 10px 10px 0;
+  -webkit-transition: color 0.2s;
+}
+
+.tag::before {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: '';
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.tag::after {
+  background: #fff;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid #eee;
+  border-top: 13px solid transparent;
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tag:hover {
+  background-color: lightblue;
+  color: white;
+}
+
+.tag:hover::after {
+   border-left-color: lightblue;
+}

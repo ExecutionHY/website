@@ -15,7 +15,7 @@ class Category(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return 'category', (), {'pk': self.pk}
+        return 'blog_category', (), {'pk': self.pk}
 
 
 class Tag(models.Model):
@@ -49,7 +49,7 @@ class Post(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return 'post', (), {'pk': self.pk}
+        return 'blog_post', (), {'pk': self.pk}
 
 
 class PostAdmin(admin.ModelAdmin):

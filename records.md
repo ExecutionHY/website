@@ -394,3 +394,5 @@ ps -ef
 ```
 nohup ./manage.py runserver 0.0.0.0:80 &
 ```
+
+迁徙的方法是git clone 之后 git pull，非常方便。

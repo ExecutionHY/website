@@ -28,19 +28,25 @@
             <div class="info">
                 <div class="category">
 
-                    <span class="icon fa-thumb-tack" style="font-size:15px;color:orangered;">&nbsp;&nbsp;</span>
-                    <span class="category" style="color: orange"><a>{{ post.category }}</a></span>
+                    <span class="icon fa-thumb-tack" style="font-size:15px;color:crimson;">&emsp;</span>
+                    <span class="category" style="color: orange">
+                        <a href="{{ post.category.get_absolute_url }}">{{ post.category }}</a>
+                    </span>
                 </div>
                 <div class="author">
-                    <span class="icon fa-user" style="font-size:15px;color:orangered;">&nbsp;&nbsp;</span>
+                    <span class="icon fa-user" style="font-size:15px;color:crimson;">&emsp;</span>
                     By <span class="author" style="color: #4a86e8"><a>{{ post.author }}</a></span>
                 </div>
                 <div class="time">
-                    <span class="icon fa-clock-o" style="font-size:15px;color:orangered;">&nbsp;&nbsp;</span>
+                    <span class="icon fa-clock-o" style="font-size:15px;color:crimson;">&emsp;</span>
                     <span class="pub_date" style="color: dimgray">{{ post.publication_date|date:"Y-m-d H:i" }}</span>
                     <span class="mod_date" style="color: dimgray"> | Updated: {{ post.modification_date|date:"Y-m-d H:i" }}</span>
                 </div>
-
+                <ul class="tags">
+                    {% for tag in tags %}
+                        <li><a href="#" class="tag">{{ tag }}</a></li>
+                    {% endfor %}
+                </ul>
             </div>
 
             <br />
