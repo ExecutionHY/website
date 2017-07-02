@@ -382,3 +382,15 @@ post.html也同理显示
 一般性的用 {{ xx }} 传值会变成字符串，无法使用标签，所以要加上 {{ xx | safe }}
 
 按照教程里面再搞个markup来提供markdown转码服务。坑：templatetags 必须重启 server 才能用。
+
+## 4 远程部署
+
+```
+ps -ef
+```
+
+这条bash 指令查看所有 bg process
+
+```
+nohup ./manage.py runserver 0.0.0.0:80 &
+```
