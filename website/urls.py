@@ -22,5 +22,4 @@ urlpatterns = [
 
     url(r'^$', 'website.views.home', name='home'),
     url(r'^blog/', include('blog.urls')),
-    url(r'^xnews/', include('xnews.urls')),
 ]

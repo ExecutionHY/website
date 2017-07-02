@@ -45,7 +45,7 @@
                     <span class="category" style="color: #ff9900;">{{ post.category }}</span>
                     <span class="author" style="color: #4a86e8">{{ post.author }}</span>
                     <span class="pub_date" style="color: #6aa84f">{{ post.publication_date|date:"Y-m-d H:i" }}</span>
-                    <span class="mod_date" style="color: #000000"> | Updated: {{ post.modification_date|date:"Y-m-d H:i" }}</span>
+                    <span class="mod_date" style="color: dimgray"> | Updated: {{ post.modification_date|date:"Y-m-d H:i" }}</span>
                 </div>
                 <div class="summary">
                     {{ post.content|slice:"64" }}...

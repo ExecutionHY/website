@@ -2,6 +2,12 @@
 
 {% block title %}Execution's Blogs{% endblock %}
 
+{% block user %}
+    <span class="image avatar48"><img src="/static/img/avatar.jpg" alt="" /></span>
+    <h1 id="title">Execution</h1>
+    <p>DeadLiner</p>
+{% endblock %}
+
 {% block sidebar %}
     <li><a href="/blog" id="blog-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Blog</span></a></li>
     <li><a href="#post" id="post-link" class="skel-layers-ignoreHref"><span class="icon fa-book">Post</span></a></li>
@@ -16,17 +22,28 @@
 {% block content %}
 
     <section id="post">
-        <div class="container">
-            <h3><a href="{% url 'blog.views.blog_post' post.id %}">{{ post.title }}</a></h3>
+        <article class="container">
+            <h1>{{ post.title }}</h1>
             <div class="info">
-                <span class="category" style="color: #ff9900;">{{ post.category }}</span>
-                <span class="author" style="color: #4a86e8">{{ post.author }}</span>
-                <span class="pub_date" style="color: #6aa84f">{{ post.publication_date|date:"Y-m-d H:i" }}</span>
-                <span class="mod_date" style="color: #000000"> | Updated: {{ post.modification_date|date:"Y-m-d H:i" }}</span>
+                <div class="category">
+
+                    <span class="icon fa-thumb-tack" style="font-size:15px;color:orangered;">&nbsp;&nbsp;</span>
+                    <span class="category" style="color: orange"><a>{{ post.category }}</a></span>
+                </div>
+                <div class="author">
+                    <span class="icon fa-user" style="font-size:15px;color:orangered;">&nbsp;&nbsp;</span>
+                    By <span class="author" style="color: #4a86e8"><a>{{ post.author }}</a></span>
+                </div>
+                <div class="time">
+                    <span class="icon fa-clock-o" style="font-size:15px;color:orangered;">&nbsp;&nbsp;</span>
+                    <span class="pub_date" style="color: dimgray">{{ post.publication_date|date:"Y-m-d H:i" }}</span>
+                    <span class="mod_date" style="color: dimgray"> | Updated: {{ post.modification_date|date:"Y-m-d H:i" }}</span>
+                </div>
+
             </div>
-            <div class="article">
-                {{ post.content }}
-            </div>
+            <article class="markdown-body">
+                {{ post.content|safe }}
+            </article>
         </div>
     </section>
 

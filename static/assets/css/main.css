@@ -1,4 +1,5 @@
 @import url("font-awesome.min.css");
+
 /*@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,600");
 */
 
@@ -10,7 +11,13 @@
 
 /* Reset */
 
-	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+	html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6,
+	p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn,
+	em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+	b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+	table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas,
+	details, embed, figure, figcaption, footer, header, menu, nav, output, ruby,
+	section, summary, time, mark, audio, video {
 		margin: 0;
 		padding: 0;
 		border: 0;
@@ -18,7 +25,7 @@
 		vertical-align: baseline;
 	}
 
-	article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+	article, aside, details, figcaption, figure, footer, header, menu, nav, section {
 		display: block;
 	}
 
@@ -62,21 +69,21 @@
 		margin-right: auto;
 	}
 
-	.container.\31\25\25 {
+	.container.\31 25\25 {
 		width: 100%;
 		max-width: 1750px;
 		min-width: 1400px;
 	}
 
-	.container.\37\5\25 {
+	.container.\37 5\25 {
 		width: 1050px;
 	}
 
-	.container.\35\0\25 {
+	.container.\35 0\25 {
 		width: 700px;
 	}
 
-	.container.\32\5\25 {
+	.container.\32 5\25 {
 		width: 350px;
 	}
 
@@ -1596,6 +1603,10 @@
 			color: #333;
 		}
 
+	h1 {
+		font-size: 2.5em;
+	}
+
 	h2 {
 		font-size: 2em;
 		letter-spacing: -1px;
@@ -1646,7 +1657,7 @@
 	}
 
 		a:hover {
-			color: #E27689;
+			color: lightgray;
 			border-bottom-color: rgba(255, 255, 255, 0);
 		}
 

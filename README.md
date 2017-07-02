@@ -26,4 +26,6 @@ Home
 - 搜索：
 - 聊天室：
 
-参考原来的教程。[http://udn.yyuap.com/doc/django-web-app-book/index.html
+参考原来的教程。http://udn.yyuap.com/doc/django-web-app-book/index.html
+
+项目记录：[records.md](./records.md)

@@ -39,7 +39,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'blog',
-    'xnews',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -116,3 +115,11 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+# for email sending
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 25   # default port for gmail
+EMAIL_HOST_USER = 'executionhy@gmail.com'
+EMAIL_HOST_PASSWORD = 'password'
+UserEmail='executionhy@gmail.com'
+EMAIL_USE_TLS = True
