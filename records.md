@@ -383,6 +383,31 @@ post.html也同理显示
 
 按照教程里面再搞个markup来提供markdown转码服务。坑：templatetags 必须重启 server 才能用。
 
+python-markdown 提供的 sublist 要求 4spaces 的解决方案。[Nested lists require 4 spaces of indent](https://github.com/waylan/Python-Markdown/issues/3) 
+
+### 3.2 upload file
+
+正式发博之前，得实现图片上传功能。
+
+[https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html](https://simpleisbetterthancomplex.com/tutorial/2016/08/01/how-to-upload-files-with-django.html)
+
+我所期待的功能是，可以把它存到指定位置，还可以修改名称。
+
+```python
+def blog_upload(request, blog_pk):
+    if request.method == 'POST' and request.FILES['image']:
+        print 'ddd'
+        file = request.FILES['image']
+        fs = FileSystemStorage()
+        filename = fs.save('static/img/post/%03d-%s' % (int(blog_pk), file.name), file)
+        uploaded_url = fs.url(filename)
+        return HttpResponse('Image upload success at ' + uploaded_url)
+
+    return HttpResponse('File upload failed.')
+```
+
+做好上传功能后，html 表单 input[type="file"] 还是太丑，修改一下css吧。
+
 ## 4 远程部署
 
 ```

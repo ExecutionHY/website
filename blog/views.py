@@ -1,6 +1,8 @@
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render_to_response, get_object_or_404, HttpResponse
 from django.template import RequestContext
 from blog.models import Post, Category
+
+from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 
@@ -82,3 +84,15 @@ def blog_search(request):
         ctx,
         context_instance=RequestContext(request)
     )
+
+
+def blog_upload(request, blog_pk):
+    if request.method == 'POST' and request.FILES['image']:
+        print 'ddd'
+        file = request.FILES['image']
+        fs = FileSystemStorage()
+        filename = fs.save('static/img/post/%03d-%s' % (int(blog_pk), file.name), file)
+        uploaded_url = fs.url(filename)
+        return HttpResponse('Image upload success at ' + uploaded_url)
+
+    return HttpResponse('File upload failed.')

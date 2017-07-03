@@ -60,6 +60,12 @@
     <section id="comment">
         <div class="container">
             No comment.
+
+            <form method="post" enctype="multipart/form-data" action="upload/">
+                {% csrf_token %}
+                <input type="file" name="image">
+                <button type="submit">Upload Image</button>
+            </form>
         </div>
     </section>
 
