@@ -91,7 +91,10 @@ def blog_upload(request, blog_pk):
         print 'ddd'
         file = request.FILES['image']
         fs = FileSystemStorage()
-        filename = fs.save('static/img/post/%03d-%s' % (int(blog_pk), file.name), file)
+        filename = 'static/img/post/%03d-%s' % (int(blog_pk), file.name)
+        if fs.exists(filename):
+            fs.delete(filename)
+        fs.save(filename, file)
         uploaded_url = fs.url(filename)
         return HttpResponse('Image upload success at ' + uploaded_url)
 

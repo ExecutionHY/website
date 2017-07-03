@@ -1804,6 +1804,7 @@
 		margin-bottom: 0.5em;
 	}
 
+	form input[type="search"],
 	form input[type="text"],
 	form input[type="email"],
 	form input[type="password"],
