@@ -27,7 +27,11 @@
     <!-- Search -->
     <section id="search" class="top dark center">
         <div class="container">
-            <header><h2>Blog</h2></header>
+            {% if is_search %}
+                <header><h2>Search Results for '{{ keyword }}'</h2></header>
+            {% else %}
+                <header><h2>Blog</h2></header>
+            {% endif %}
             <form method="get" action="/blog/search/">
                 {% csrf_token %}
                 <div class="row">

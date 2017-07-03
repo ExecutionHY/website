@@ -366,7 +366,6 @@ blog.html继承base.html的内容，处理views传递过来的ctx内容。
 {% endfor %}
 
 {% endblock %}
-
 ```
 
 post.html也同理显示
@@ -421,7 +420,3 @@ nohup ./manage.py runserver 0.0.0.0:80 &
 ```
 
 迁徙的方法是git clone 之后 git pull，非常方便。
-
-
-
-![post-4-1](/Users/mac/Downloads/post-4-1.png)

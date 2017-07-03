@@ -1,4 +1,4 @@
-from django.shortcuts import render_to_response, get_object_or_404, HttpResponse
+from django.shortcuts import render_to_response, get_object_or_404, HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from blog.models import Post, Category
 
@@ -73,9 +73,11 @@ def blog_search(request):
 
     else:
         result = None
+        keyword = None
 
     ctx = {
         "is_search": True,
+        "keyword": keyword,
         "posts": result,
     }
 
@@ -86,16 +88,16 @@ def blog_search(request):
     )
 
 
-def blog_upload(request, blog_pk):
+def blog_upload(request, post_pk):
     if request.method == 'POST' and request.FILES['image']:
         print 'ddd'
         file = request.FILES['image']
         fs = FileSystemStorage()
-        filename = 'static/img/post/%03d-%s' % (int(blog_pk), file.name)
+        filename = 'static/img/post/%03d-%s' % (int(post_pk), file.name)
         if fs.exists(filename):
             fs.delete(filename)
         fs.save(filename, file)
         uploaded_url = fs.url(filename)
-        return HttpResponse('Image upload success at ' + uploaded_url)
+        return HttpResponseRedirect('/blog/post/'+post_pk)
 
     return HttpResponse('File upload failed.')
