@@ -98,6 +98,6 @@ def blog_upload(request, post_pk):
 			fs.delete(filename)
 		fs.save(filename, file)
 		uploaded_url = fs.url(filename)
-		return HttpResponse('File upload success at ' + uploaded_url)
-	else:
-		return HttpResponse('File upload failed.')
+		return HttpResponseRedirect('/admin/blog/post/'+post_pk)
+
+	return HttpResponse('File upload failed.')
