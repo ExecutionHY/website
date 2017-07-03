@@ -19,7 +19,7 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^$', 'blog.views.blog_home', name='blog_home'),
     url(r'^post/(?P<pk>\d+)/$', 'blog.views.blog_post', name='blog_post'),
-    url(r'^post/(?P<post_pk>\d+)/upload/$', 'blog.views.blog_upload', name='blog_upload'),
+    url(r'^admin/blog/post/(?P<post_pk>\d+)/upload/$', 'blog.views.blog_upload', name='blog_upload'),
     url(r'^category/(?P<pk>\d+)/$', 'blog.views.blog_category', name='blog_category'),
     url(r'^search/$', 'blog.views.blog_search', name='blog_search'),
 ]

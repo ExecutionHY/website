@@ -374,15 +374,25 @@ post.html也同理显示
 
 ### 3.1 markdown
 
+#### html css
+
 [https://github.com/sindresorhus/github-markdown-css](https://github.com/sindresorhus/github-markdown-css)
 
 使用这个样式，套一个标签\<article class="markdown-body"\>
 
 一般性的用 {{ xx }} 传值会变成字符串，无法使用标签，所以要加上 {{ xx | safe }}
 
+#### markdown to html
+
 按照教程里面再搞个markup来提供markdown转码服务。坑：templatetags 必须重启 server 才能用。
 
 python-markdown 提供的 sublist 要求 4spaces 的解决方案。[Nested lists require 4 spaces of indent](https://github.com/waylan/Python-Markdown/issues/3) 
+
+#### code highlight
+
+highlight这次怎么实现好呢。[http://peter-hoffmann.com/2012/python-markdown-github-flavored-code-blocks.html ](http://peter-hoffmann.com/2012/python-markdown-github-flavored-code-blocks.html)看了这篇博客，我决定使用js来搞。它有一点好，就是还可以拓展语言，之前 python-markdown 的高亮拓展中 bash 就是没有的。
+
+关于配色主题，他也给出了许多方案，我选择了 github-gist 主题，还不错。
 
 ### 3.2 upload file
 
@@ -400,12 +410,35 @@ def blog_upload(request, blog_pk):
         fs = FileSystemStorage()
         filename = fs.save('static/img/post/%03d-%s' % (int(blog_pk), file.name), file)
         uploaded_url = fs.url(filename)
-        return HttpResponse('Image upload success at ' + uploaded_url)
+		return HttpResponse('Image upload success at ' + uploaded_url)
 
     return HttpResponse('File upload failed.')
 ```
 
 做好上传功能后，html 表单 input[type="file"] 还是太丑，修改一下css吧。
+
+### 3.3 override admin
+
+我们的需求是，重载 admin 页面，把 upload 的按钮给放上去。重载的方法根据文档所述。
+
+[https://docs.djangoproject.com/en/dev/ref/contrib/admin/#adminsite-objects](https://docs.djangoproject.com/en/dev/ref/contrib/admin/#adminsite-objects)
+
+简单归纳，就是把一个同名 html 放到 templates/admin/app_name/ 目录下，它在查找这个 html 时会优先从这里取。同时我们把原版 html 放在 templates/admin/ 下，再用这个新的去继承它。
+
+[https://raw.githubusercontent.com/django/django/1.8.1/django/contrib/admin/templates/admin/change_form.html](https://raw.githubusercontent.com/django/django/1.8.1/django/contrib/admin/templates/admin/change_form.html)
+
+例如我继承了这个页面。而我新的 change_form.html 页面这样写：
+
+```html
+{% extends "admin/change_form.html" %}
+{% block after_related_objects %}
+	<form method="post" enctype="multipart/form-data" action="upload/">
+      {% csrf_token %}
+      <input type="file" name="image">
+      <button type="submit">Upload Image</button>
+  </form>
+{% endblock %}
+```
 
 ## 4 远程部署
 
