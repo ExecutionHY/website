@@ -87,9 +87,14 @@
     </script>
 {% endblock %}
 
+
 {# JavaScript for prepopulated fields #}
 {% prepopulated_fields_js %}
 
 </div>
-</form></div>
+</form>
+
+{% block after_form %}{% endblock %}
+
+</div>
 {% endblock %}

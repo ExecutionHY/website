@@ -440,6 +440,34 @@ def blog_upload(request, blog_pk):
 {% endblock %}
 ```
 
+### 3.4 Disqus Comment
+
+跟多说什么的原理差不多啦。不过一开始给你提供的代码得改改，需要设置好config部分。
+
+```html
+<div id="disqus_thread">You may not be able to access <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></div>
+<script>
+
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+
+var disqus_config = function () {
+this.page.url = 'http://www.execution.website/blog/';  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = {{ post.pk }}; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://execution-1.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+```
+
 ## 4 远程部署
 
 ```
@@ -453,3 +481,18 @@ nohup ./manage.py runserver 0.0.0.0:80 &
 ```
 
 迁徙的方法是git clone 之后 git pull，非常方便。
+
+## 5 facer
+
+### 5.1 Face Recognition
+
+第一个小项目 [https://realpython.com/blog/python/face-recognition-with-python/](https://realpython.com/blog/python/face-recognition-with-python/)
+
+它提供了源码 [https://github.com/shantnu/FaceDetect](https://github.com/shantnu/FaceDetect)
+
+部署opencv
+
+```
+$ pip install opencv-python
+```
+

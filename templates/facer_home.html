@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Execution's Facer{% endblock %}
+
+{% block user %}
+    <span class="image avatar48"><img src="/static/img/avatar.jpg" alt="" /></span>
+    <h1 id="title">Execution</h1>
+    <p>DeadLiner</p>
+{% endblock %}
+
+{% block sidebar %}
+	<li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
+
+{% endblock %}
+
+{% block content %}
+
+
+    <!-- Search -->
+    <section id="title" class="top dark center">
+        <div class="container">
+	        <header>
+              <h2>Facer</h2>
+              <p>红发香克斯, 面子果实能力者。</p>
+          </header>
+        </div>
+    </section>
+
+    <!-- List -->
+    <section id="list" class="body">
+        <div class="container">
+
+            <form method="post" id="upload_form" enctype="multipart/form-data" action="">
+							{% csrf_token %}
+							<input type="file" name="upload_image" id="upload_image">
+							<button type="submit" id="upload_button" value="Upload Image" name="upload">Upload Image</button>
+					  </form>
+
+        </div>
+    </section>
+
+
+{% endblock %}

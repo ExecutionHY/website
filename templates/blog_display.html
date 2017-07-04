@@ -1,12 +1,4 @@
-{% extends "base.html" %}
-
-{% block title %}Execution's Blogs{% endblock %}
-
-{% block user %}
-    <span class="image avatar48"><img src="/static/img/avatar.jpg" alt="" /></span>
-    <h1 id="title">Execution</h1>
-    <p>DeadLiner</p>
-{% endblock %}
+{% extends "blog_home.html" %}
 
 {% block sidebar %}
     <li><a href="/blog" id="blog-link" class="skel-layers-ignoreHref">
@@ -23,8 +15,6 @@
 
 {% endblock %}
 
-{% load markup %}
-
 {% block content %}
 
     {% if category %}
@@ -39,7 +29,7 @@
 
             {% for post in posts %}
             <div class="post">
-                <h3><a href="{% url 'blog.views.blog_post' post.id %}">{{ post.title }}</a></h3>
+                <h3><span class="icon fa-angle-right">&nbsp;&nbsp;</span><a href="{% url 'blog.views.blog_post' post.id %}">{{ post.title }}</a></h3>
                 <div class="info">
                     <span class="category" style="color: #ff9900;">{{ post.category }}</span>
                     <span class="author" style="color: #4a86e8">{{ post.author }}</span>
@@ -49,6 +39,7 @@
                 <div class="summary">
                     {{ post.content|slice:"64" }}...
                 </div>
+                <br />
             </div>
             {% endfor %}
 
