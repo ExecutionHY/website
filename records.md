@@ -444,6 +444,8 @@ def blog_upload(request, blog_pk):
 
 跟多说什么的原理差不多啦。不过一开始给你提供的代码得改改，需要设置好config部分。
 
+一开始我遇到的问题是，多个页面显示同一个评论。根据官方的介绍，你必须保证 url 和 identifier 都是 unique 的。真的奇怪的是 url 的设置，我现在莫名地加一段 #comment 上去，如果不加的话，最后的 pk 这个数字不会被传到 thread 上，就会导致不 unique，是了很多遍，最后就决定这么写了。
+
 ```html
 <div id="disqus_thread">You may not be able to access <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></div>
 <script>
@@ -453,19 +455,17 @@ def blog_upload(request, blog_pk):
 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 
 var disqus_config = function () {
-this.page.url = 'http://www.execution.website/blog/';  // Replace PAGE_URL with your page's canonical URL variable
-this.page.identifier = {{ post.pk }}; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+	this.page.url = 'http://www.execution.website/blog/post/{{ post.pk }}#comment';  // Replace PAGE_URL with your page's canonical URL variable
+	this.page.identifier = 'blog-{{ post.pk }}'; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 };
 
 (function() { // DON'T EDIT BELOW THIS LINE
-var d = document, s = d.createElement('script');
-s.src = 'https://execution-1.disqus.com/embed.js';
-s.setAttribute('data-timestamp', +new Date());
-(d.head || d.body).appendChild(s);
+	var d = document, s = d.createElement('script');
+	s.src = 'https://execution-1.disqus.com/embed.js';
+	s.setAttribute('data-timestamp', +new Date());
+	(d.head || d.body).appendChild(s);
 })();
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
 ```
 
 ## 4 远程部署
