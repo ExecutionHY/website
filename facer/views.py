@@ -1,8 +1,11 @@
 from django.shortcuts import render, render_to_response, get_object_or_404, HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from django.core.files.storage import FileSystemStorage
-
+from website.settings import BASE_DIR
 from models import Photo
+
+import cv2
+import os
 
 # Create your views here.
 
@@ -17,6 +20,29 @@ def facer_home(request):
 		if fs.exists(filename):
 			fs.delete(filename)
 		fs.save(filename, file)
+
+		# Create the haar cascade
+		cascPath = os.path.join(BASE_DIR, 'static/facer/haarcascade_frontalface_default.xml')
+		faceCascade = cv2.CascadeClassifier(cascPath)
+
+		# Read the image
+		imagePath = os.path.join(BASE_DIR, filename)
+		image = cv2.imread(imagePath)
+
+		gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+		# Detect faces in the image
+		faces = faceCascade.detectMultiScale(
+			gray,
+			scaleFactor=1.2,
+			minNeighbors=5,
+			minSize=(30, 30)
+		)
+
+		for (x, y, w, h) in faces:
+			cv2.rectangle(image, (x, y), (x+w, y+h), (0, 255, 0), 2)
+		cv2.imwrite(imagePath, image)
+
 		return HttpResponseRedirect('input/'+str(new_photo.pk))
 
 	else:

@@ -490,9 +490,29 @@ nohup ./manage.py runserver 0.0.0.0:80 &
 
 它提供了源码 [https://github.com/shantnu/FaceDetect](https://github.com/shantnu/FaceDetect)
 
-部署opencv
+#### 部署opencv
 
+```bash
+pip install opencv-python
 ```
-$ pip install opencv-python
+
+你以为这一条指令就够了吗。花了一整天查了很多资料的结果，我还是利用 pip 安装成功了。首先要更新 numpy 版本。numpy 是苹果内置的插件，不得修改，我们只能强制安装一个新版本。
+
+```bash
+pip install --upgrade --ignore-installed --install-option '--install-data=/usr/local' numpy
+```
+
+这次我学到了很多东西，pip 和 brew 都不要用 sudo 模式。
+
+如果存在访问权限问题，就修改这个文件夹的权限，利用
+
+```bash
+sudo chown -R $(whoami) <dir>
+```
+
+如果 pip 这样还会报错的话，使用如下指令，可以越过那个 permission 限制。
+
+```bash
+pip install --user opencv-python
 ```
 
