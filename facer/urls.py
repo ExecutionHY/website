@@ -18,5 +18,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^$', 'facer.views.facer_home', name='facer_home'),
-    url(r'^input/(?P<pk>\d+)/$', 'facer.views.facer_input', name='facer_input'),
+    url(r'^1/$', 'facer.views.facer1_input', name='facer1_input'),
 ]

@@ -18,12 +18,25 @@
 
     <!-- List -->
     <section id="list" class="body">
-        <div class="container">
+      <div class="container">
+	      <form method="post" id="upload_form" enctype="multipart/form-data" action="">
+					{% csrf_token %}
+					<input type="file" name="upload_image" id="upload_image">
+					<button type="submit" id="upload_button" value="Upload Image" name="upload">Upload Image</button>
+			  </form>
 
-            <img src="{{ img_src }}" width="100%"/>
+	      <img src="{{ img_src }}" width="100%"/>
 
-        </div>
+	      <form action="output" method="get">
+		      {% for counter in count_list %}
+		        <input type="radio" name="src" value="{{ counter }}" />{{ counter }}
+		      {% endfor %}
+				  <input type="submit" value="Submit" />
+				</form>
+      </div>
+
     </section>
+
 
 
 {% endblock %}

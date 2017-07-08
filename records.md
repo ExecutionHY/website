@@ -482,13 +482,17 @@ nohup ./manage.py runserver 0.0.0.0:80 &
 
 迁徙的方法是git clone 之后 git pull，非常方便。
 
-## 5 facer
+## 5 Facer
 
 ### 5.1 Face Recognition
 
-第一个小项目 [https://realpython.com/blog/python/face-recognition-with-python/](https://realpython.com/blog/python/face-recognition-with-python/)
+第一个小项目
+
+参考 [https://realpython.com/blog/python/face-recognition-with-python/](https://realpython.com/blog/python/face-recognition-with-python/)
 
 它提供了源码 [https://github.com/shantnu/FaceDetect](https://github.com/shantnu/FaceDetect)
+
+[http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_core/py_basic_ops/py_basic_ops.html](http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_core/py_basic_ops/py_basic_ops.html) opencv教程
 
 #### 部署opencv
 
@@ -515,4 +519,6 @@ sudo chown -R $(whoami) <dir>
 ```bash
 pip install --user opencv-python
 ```
+
+不错的博客：[https://lizonghang.github.io/2016/07/16/Mac%E4%B8%8A%E5%AE%89%E8%A3%85python-opencv/](https://lizonghang.github.io/2016/07/16/Mac%E4%B8%8A%E5%AE%89%E8%A3%85python-opencv/)
 
