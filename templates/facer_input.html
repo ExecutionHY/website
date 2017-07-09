@@ -27,11 +27,16 @@
 
 	      <img src="{{ img_src }}" width="100%"/>
 
-	      <form action="output" method="get">
+	      <form action="output" method="get" enctype="multipart/form-data">
+	        {% csrf_token %}
+
+		      <input type="hidden" name="img_pk" value="{{ img_pk }}"></input>
+
+	        Choose One Face with Gakki:
 		      {% for counter in count_list %}
-		        <input type="radio" name="src" value="{{ counter }}" />{{ counter }}
+		        <input type="radio" name="number" value="{{ counter }}" />{{ counter }}
 		      {% endfor %}
-				  <input type="submit" value="Submit" />
+				  <input type="submit" value="Choose" />
 				</form>
       </div>
 

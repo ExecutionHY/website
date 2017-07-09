@@ -1,0 +1,31 @@
+{% extends "facer_home.html" %}
+
+
+{% block sidebar %}
+	<li><a href="/facer/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Facer</span></a></li>
+
+{% endblock %}
+
+{% block content %}
+
+
+    <!-- Search -->
+    <section id="title" class="top dark center">
+        <div class="container">
+	        Output Photo:
+        </div>
+    </section>
+
+    <!-- List -->
+    <section id="list" class="body">
+      <div class="container">
+
+	      <img src="{{ img_src }}" width="100%"/>
+
+      </div>
+
+    </section>
+
+
+
+{% endblock %}

@@ -59,18 +59,80 @@ def facer1_input(request):
 			'count_list': [x for x in range(0, len(faces))],
 		}
 
-		return render_to_response(
-			"facer_input.html",
-			ctx,
-			context_instance=RequestContext(request)
-		)
-
-	ctx = {
-		'img_src': '/static/img/facer1/000000-input.png'
-	}
+	else:
+		ctx = {
+			'img_src': '/static/img/facer1/000000-input.png'
+		}
 
 	return render_to_response(
 		"facer_input.html",
+		ctx,
+		context_instance=RequestContext(request)
+	)
+
+
+def facer1_output(request):
+	if request.method == 'GET':
+		img_pk = request.GET.get('img_pk')
+		number = request.GET.get('number')
+
+		filename = 'static/img/facer1/%06d-input.png' % int(img_pk)
+
+		# Create the haar cascade
+		cascPath = os.path.join(BASE_DIR, 'static/facer/haarcascade_frontalface_default.xml')
+		faceCascade = cv2.CascadeClassifier(cascPath)
+
+		# Read the image
+		imagePath = os.path.join(BASE_DIR, filename)
+		image = cv2.imread(imagePath)
+
+		gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+		# Detect faces in the image
+		faces = faceCascade.detectMultiScale(
+			gray,
+			scaleFactor=1.2,
+			minNeighbors=5,
+			minSize=(30, 30)
+		)
+
+		faces = sorted(faces, key=lambda face: face[0])
+		cnt = 0
+		for (x, y, w, h) in faces:
+			if cnt == int(number):
+				src = image[y:y+h, x:x+w]
+			cnt += 1
+		print 'cnt = ', cnt
+
+		imagePath2 = os.path.join(BASE_DIR, 'static/facer/gakki.png')
+		dst = cv2.imread(imagePath2)
+		gray = cv2.cvtColor(dst, cv2.COLOR_BGR2GRAY)
+		dstFaces = faceCascade.detectMultiScale(
+			gray,
+			scaleFactor=1.2,
+			minNeighbors=5,
+			minSize=(30, 30)
+		)
+
+		cnt = 0
+		for (x, y, w, h) in dstFaces:
+			if cnt == 0:
+				scaled = cv2.resize(src, (w, h), interpolation=cv2.INTER_CUBIC)
+				dst[y:y+scaled.shape[0], x:x+scaled.shape[1]] = scaled
+			cnt += 1
+
+		outPath = 'static/img/facer1/%06d-output.png' % int(img_pk)
+		cv2.imwrite(outPath, dst)
+
+		ctx = {
+			'img_src': '/'+outPath,
+		}
+
+	else:
+		ctx = None
+
+	return render_to_response(
+		"facer_output.html",
 		ctx,
 		context_instance=RequestContext(request)
 	)
