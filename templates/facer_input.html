@@ -33,6 +33,9 @@
 		      <input type="hidden" name="img_pk" value="{{ img_pk }}"></input>
 
 	        Choose One Face with Gakki:
+	        {% if not count_list %}
+	          No faces detected.
+	        {% endif %}
 		      {% for counter in count_list %}
 		        <input type="radio" name="number" value="{{ counter }}" />{{ counter }}
 		      {% endfor %}
