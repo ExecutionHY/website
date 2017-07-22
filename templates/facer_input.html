@@ -37,9 +37,15 @@
 	          No faces detected.
 	        {% endif %}
 		      {% for counter in count_list %}
-		        <input type="radio" name="number" value="{{ counter }}" />{{ counter }}
+		        <input type="radio" name="number" value="{{ counter }}" onclick="change_button()"/>{{ counter }}
 		      {% endfor %}
-				  <input type="submit" value="Choose" />
+	        <script>
+              function change_button() {
+                  document.getElementById('generate').disabled = false;
+                  // <html> disabled = false means disabled, js disabled = false means enabled.
+              }
+          </script>
+				  <input type="submit" id="generate" value="Generate" disabled="disabled"/>
 				</form>
       </div>
 
