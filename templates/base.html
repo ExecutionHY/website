@@ -17,8 +17,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 		<script>hljs.initHighlightingOnLoad();</script>
 
-
-		<link rel="stylesheet" href="/static/css/github-markdown.css" />
+		{% block head_assert %} {% endblock %}
 		<!--[if lte IE 8]><link rel="stylesheet" href="/static/assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="/static/assets/css/ie9.css" /><![endif]-->
 	</head>
@@ -96,6 +95,7 @@
 			<!--[if lte IE 8]><script src="/static/assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="/static/assets/js/main.js#1010"></script>
 
+		{% block body_assert %} {% endblock %}
 		<script id="dsq-count-scr" src="//execution-1.disqus.com/count.js" async></script>
 
 	</body>

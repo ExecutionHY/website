@@ -482,6 +482,10 @@ nohup ./manage.py runserver 0.0.0.0:80 &
 
 迁徙的方法是git clone 之后 git pull，非常方便。
 
+如何让自己的网站被 Google 检索到。
+
+http://www.steegle.com/websites/google-sites-howtos/get-found-google-search#TOC-Set-your-Site-s-Visibility
+
 ## 5 Facer
 
 ### 5.1 Face Recognition

@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^$', 'website.views.home', name='home'),
     url(r'^blog/', include('blog.urls')),
     url(r'^facer/', include('facer.urls')),
+    url(r'^composer/$', 'composer.views.composer_home', name='composer_home')
 ]
