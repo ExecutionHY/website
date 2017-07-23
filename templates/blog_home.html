@@ -61,6 +61,29 @@
             </div>
             {% endfor %}
 
+
+            {% if posts.has_other_pages %}
+						  <div class="pagination">
+						    {% if posts.has_previous %}
+						      <a href="?page={{ posts.previous_page_number }}">&laquo;</a>
+						    {% else %}
+						      <a class="disabled"><span>&laquo;</span></a>
+						    {% endif %}
+						    {% for i in posts.paginator.page_range %}
+						      {% if posts.number == i %}
+						        <a class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
+						      {% else %}
+						        <a href="?page={{ i }}">{{ i }}</a>
+						      {% endif %}
+						    {% endfor %}
+						    {% if posts.has_next %}
+						      <a href="?page={{ posts.next_page_number }}">&raquo;</a>
+						    {% else %}
+						      <a class="disabled"><span>&raquo;</span></a>
+						    {% endif %}
+						  </div>
+						{% endif %}
+
         </div>
     </section>
 

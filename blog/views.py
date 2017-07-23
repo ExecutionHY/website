@@ -1,6 +1,7 @@
 from django.shortcuts import render, render_to_response, get_object_or_404, HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 from blog.models import Post, Category
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.core.files.storage import FileSystemStorage
 
@@ -8,7 +9,16 @@ from django.core.files.storage import FileSystemStorage
 
 
 def blog_home(request):
-	posts = Post.objects.all()
+	post_list = Post.objects.all()
+	page = request.GET.get('page', 1)
+
+	paginator = Paginator(post_list, 3)
+	try:
+		posts = paginator.page(page)
+	except PageNotAnInteger:
+		posts = paginator.page(1)
+	except EmptyPage:
+		posts = paginator.page(paginator.num_pages)
 
 	ctx = {
 		"posts": posts,
@@ -62,6 +72,7 @@ def blog_search(request):
 	if 'q' in request.GET:
 		keyword = request.GET['q'].encode('utf-8').lower()
 
+		# check keyword in title & content
 		posts = Post.objects.all()
 		result = []
 		for p in posts:
@@ -88,6 +99,7 @@ def blog_search(request):
 	)
 
 
+# upload files, overwrite
 def blog_upload(request, post_pk):
 
 	if request.method == 'POST' and request.FILES['upload_image']:

@@ -21,8 +21,16 @@
       <div class="container">
 	      <form method="post" id="upload_form" enctype="multipart/form-data" action="">
 					{% csrf_token %}
-					<input type="file" name="upload_image" id="upload_image">
-					<button type="submit" id="upload_button" value="Upload Image" name="upload">Upload Image</button>
+					<input type="file" name="upload_image" id="upload_image" onloadedmetadata="enUpload()">
+					<button type="submit" id="upload_button" value="Upload Image" name="upload" disabled="disabled">
+						Upload Image</button>
+
+		      <script>
+	            function enGenerate() {
+	                document.getElementById('upload_button').disabled = false;
+	                // <html> disabled = false means disabled, js disabled = false means enabled.
+	            }
+	        </script>
 			  </form>
 
 	      <img src="{{ img_src }}" width="100%"/>
@@ -37,15 +45,16 @@
 	          No faces detected.
 	        {% endif %}
 		      {% for counter in count_list %}
-		        <input type="radio" name="number" value="{{ counter }}" onclick="change_button()"/>{{ counter }}
+		        <input type="radio" name="number" value="{{ counter }}" onclick="enGenerate()"/>{{ counter }}
 		      {% endfor %}
+				  <input type="submit" id="generate_button" value="Generate" disabled="disabled"/>
+
 	        <script>
-              function change_button() {
-                  document.getElementById('generate').disabled = false;
-                  // <html> disabled = false means disabled, js disabled = false means enabled.
-              }
-          </script>
-				  <input type="submit" id="generate" value="Generate" disabled="disabled"/>
+	            function enGenerate() {
+	                document.getElementById('generate_button').disabled = false;
+	                // <html> disabled = false means disabled, js disabled = false means enabled.
+	            }
+	        </script>
 				</form>
       </div>
 

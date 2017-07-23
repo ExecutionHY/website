@@ -468,6 +468,14 @@ var disqus_config = function () {
 </script>
 ```
 
+### 3.5 pagination 分页
+
+TUTORIAL [https://simpleisbetterthancomplex.com/tutorial/2016/08/03/how-to-paginate-with-django.html](https://simpleisbetterthancomplex.com/tutorial/2016/08/03/how-to-paginate-with-django.html)
+
+css [https://www.w3schools.com/css/css3_pagination.asp](https://www.w3schools.com/css/css3_pagination.asp)
+
+
+
 ## 4 远程部署
 
 ```
@@ -482,47 +490,7 @@ nohup ./manage.py runserver 0.0.0.0:80 &
 
 迁徙的方法是git clone 之后 git pull，非常方便。
 
-如何让自己的网站被 Google 检索到。
+### 如何让自己的网站被 Google 检索到
 
 http://www.steegle.com/websites/google-sites-howtos/get-found-google-search#TOC-Set-your-Site-s-Visibility
-
-## 5 Facer
-
-### 5.1 Face Recognition
-
-第一个小项目
-
-参考 [https://realpython.com/blog/python/face-recognition-with-python/](https://realpython.com/blog/python/face-recognition-with-python/)
-
-它提供了源码 [https://github.com/shantnu/FaceDetect](https://github.com/shantnu/FaceDetect)
-
-[http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_core/py_basic_ops/py_basic_ops.html](http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_core/py_basic_ops/py_basic_ops.html) opencv教程
-
-#### 部署opencv
-
-```bash
-pip install opencv-python
-```
-
-你以为这一条指令就够了吗。花了一整天查了很多资料的结果，我还是利用 pip 安装成功了。首先要更新 numpy 版本。numpy 是苹果内置的插件，不得修改，我们只能强制安装一个新版本。
-
-```bash
-pip install --upgrade --ignore-installed --install-option '--install-data=/usr/local' numpy
-```
-
-这次我学到了很多东西，pip 和 brew 都不要用 sudo 模式。
-
-如果存在访问权限问题，就修改这个文件夹的权限，利用
-
-```bash
-sudo chown -R $(whoami) <dir>
-```
-
-如果 pip 这样还会报错的话，使用如下指令，可以越过那个 permission 限制。
-
-```bash
-pip install --user opencv-python
-```
-
-不错的博客：[https://lizonghang.github.io/2016/07/16/Mac%E4%B8%8A%E5%AE%89%E8%A3%85python-opencv/](https://lizonghang.github.io/2016/07/16/Mac%E4%B8%8A%E5%AE%89%E8%A3%85python-opencv/)
 
