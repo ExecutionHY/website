@@ -12,7 +12,7 @@ def blog_home(request):
 	post_list = Post.objects.all()
 	page = request.GET.get('page', 1)
 
-	paginator = Paginator(post_list, 3)
+	paginator = Paginator(post_list, 10)
 	try:
 		posts = paginator.page(page)
 	except PageNotAnInteger:
