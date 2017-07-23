@@ -51,7 +51,17 @@ def blog_category(request, pk):
 	category = get_object_or_404(Category, pk=pk)
 	categories = Category.objects.all()
 
-	posts = category.post_set.all()
+	post_list = category.post_set.all()
+
+	# pagination part
+	page = request.GET.get('page', 1)
+	paginator = Paginator(post_list, 10)
+	try:
+		posts = paginator.page(page)
+	except PageNotAnInteger:
+		posts = paginator.page(1)
+	except EmptyPage:
+		posts = paginator.page(paginator.num_pages)
 
 	ctx = {
 		"categories": categories,
@@ -81,15 +91,24 @@ def blog_search(request):
 			else:
 				if keyword in p.content.lower():
 					result.append(p)
-
 	else:
 		result = None
 		keyword = None
 
+	# pagination part
+	page = request.GET.get('page', 1)
+	paginator = Paginator(result, 10)
+	try:
+		posts = paginator.page(page)
+	except PageNotAnInteger:
+		posts = paginator.page(1)
+	except EmptyPage:
+		posts = paginator.page(paginator.num_pages)
+
 	ctx = {
 		"is_search": True,
 		"keyword": keyword,
-		"posts": result,
+		"posts": posts,
 	}
 
 	return render_to_response(
