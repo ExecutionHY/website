@@ -4,6 +4,8 @@
 		<link rel="stylesheet" href="/static/css/github-markdown.css" />
 {% endblock %}
 
+{% block title %}{{ post.title }}{% endblock %}
+
 {% block sidebar %}
     <li><a href="/blog" id="blog-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Blog</span></a></li>
     <li><a href="#post" id="post-link" class="skel-layers-ignoreHref"><span class="icon fa-book">Post</span></a></li>
