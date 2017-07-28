@@ -74,9 +74,9 @@
 
 window.onload = function () {
 	MIDI.loadPlugin({
-		soundfontUrl: "/static/midi/soundfont/",
+		soundfontUrl: "http://gleitz.github.io/midi-js-soundfonts/FluidR3_GM/",
 		//instrument: "acoustic_grand_piano",
-		instrument: [ "acoustic_grand_piano", "synth_drum" ],
+		instrument: [ "acoustic_grand_piano", "acoustic_grand_piano" ],
 		onprogress: function(state, progress) {
 			console.log(state, progress);
 		},
@@ -90,7 +90,8 @@ window.onload = function () {
 			MIDI.noteOff(0, note, delay + 0.75);
 
 			player = MIDI.Player;
-			player.loadFile(song[3], player.start);
+			//player.loadFile(song[3], player.start);
+			player.loadFile('/static/midi/song/Faded.mid', player.start);
 		}
 	});
 };
