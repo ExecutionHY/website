@@ -15,10 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from settings import STATIC_ROOT
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
-    #url(r'^static/(?P<path>.*)', 'django.views.static.serve', {'document_root': '/User/mac/Django/website/static'}),
+    url(r'^static/(?P<path>.*)', 'django.views.static.serve', {'document_root': STATIC_ROOT}),
 
     url(r'^$', 'website.views.home', name='home'),
     url(r'^blog/', include('blog.urls')),

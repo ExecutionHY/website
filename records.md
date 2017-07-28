@@ -488,6 +488,39 @@ nohup ./manage.py runserver 0.0.0.0:80 &
 
 迁徙的方法是git clone 之后 git pull，非常方便。
 
+### DEBUG
+
+发布自己的网站后记得把 setting.py 的 DEBUG 设置为 False。同时要设置好ALLOWED_HOSTS
+
+```python
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = False
+
+ALLOWED_HOSTS = ["127.0.0.1", "23.83.232.175", "www.execution.website"]
+```
+
+### STATIC
+
+```python
+### settings.py
+STATIC_URL = '/static/'
+
+# used in DEBUG=True
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static').replace('\\', '/'),
+)
+
+# used in DEBUG=False
+STATIC_ROOT = (
+    os.path.join(BASE_DIR, 'static')
+)
+
+### urls.py
+url(r'^static/(?P<path>.*)', 'django.views.static.serve', {'document_root': STATIC_ROOT}),
+```
+
+我们本来是不搞这些花样的，在 DEBUG = True 的时候只要依靠 settings 的前两个设置就够了。但是 DEBUG = False 不允许我们对 static 进行 serve，这就很糟糕了，所以我们建立两个设置，当 False 时搞一个自己的 document serve，地址就还是这个地址，但是你必须保证两个 static 地址是不同的，因此我们把其中一个给改一下形式。
+
 ### 如何让自己的网站被 Google 检索到
 
 http://www.steegle.com/websites/google-sites-howtos/get-found-google-search#TOC-Set-your-Site-s-Visibility
