@@ -20,6 +20,6 @@ urlpatterns = [
     url(r'^$', 'facer.views.facer_home', name='facer_home'),
     url(r'^1/$', 'facer.views.facer1_input', name='facer1_input'),
     url(r'^1/output$', 'facer.views.facer1_output', name='facer1_output'),
-    url(r'^2/$', 'facer.views.facer2_input', name='facer2_input'),
-    url(r'^2/output$', 'facer.views.facer2_output', name='facer2_output'),
+    #url(r'^2/$', 'facer.views.facer2_input', name='facer2_input'),
+    #url(r'^2/output$', 'facer.views.facer2_output', name='facer2_output'),
 ]
