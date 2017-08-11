@@ -126,7 +126,7 @@ STATIC_ROOT = (
 
 # for email sending
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 25   # default port for gmail
+EMAIL_PORT = 25   # default port for smtp
 EMAIL_HOST_USER = 'executionhy@gmail.com'
 EMAIL_HOST_PASSWORD = 'password'
 UserEmail='executionhy@gmail.com'

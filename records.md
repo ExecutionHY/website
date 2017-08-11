@@ -521,6 +521,10 @@ url(r'^static/(?P<path>.*)', 'django.views.static.serve', {'document_root': STAT
 
 我们本来是不搞这些花样的，在 DEBUG = True 的时候只要依靠 settings 的前两个设置就够了。但是 DEBUG = False 不允许我们对 static 进行 serve，这就很糟糕了，所以我们建立两个设置，当 False 时搞一个自己的 document serve，地址就还是这个地址，但是你必须保证两个 static 地址是不同的，因此我们把其中一个给改一下形式。
 
+### CDN
+
+因为我这个服务器很慢，带宽有限，利用 CDN 可以减少用户请求的数据量。 [http://www.bootcdn.cn/](http://www.bootcdn.cn/) 尽量用国内的 CDN，经我测试，国外的 cdn 例如 [https://www.cloudflare.com/](https://www.cloudflare.com/) 的，还没我自己的服务器快。
+
 ### 如何让自己的网站被 Google 检索到
 
 http://www.steegle.com/websites/google-sites-howtos/get-found-google-search#TOC-Set-your-Site-s-Visibility

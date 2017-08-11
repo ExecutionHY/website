@@ -2630,16 +2630,17 @@
 }
 
 .tag {
-  background: #eee;
-  border-radius: 3px 0 0 3px;
-  color: #999;
-  display: inline-block;
-  height: 26px;
-  line-height: 26px;
-  padding: 0 20px 0 23px;
-  position: relative;
-  margin: 0 10px 10px 0;
-  -webkit-transition: color 0.2s;
+	background: #eee;
+	border-radius: 3px 0 0 3px;
+	border-bottom: none;
+	color: #999;
+	display: inline-block;
+	height: 26px;
+	line-height: 26px;
+	padding: 0 20px 0 23px;
+	position: relative;
+	margin: 0 10px 10px 0;
+	-webkit-transition: color 0.2s;
 }
 
 .tag::before {
