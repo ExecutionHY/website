@@ -1,7 +1,26 @@
 {% extends "blog_home.html" %}
 
 {% block head_assert %}
-		<link rel="stylesheet" href="/static/css/github-markdown.css" />
+	<link rel="stylesheet" href="/static/css/github-markdown.css" />
+	<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/github-gist.min.css">
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+	<script>hljs.initHighlightingOnLoad();
+
+			//numbering for pre>code blocks
+			$(function(){
+			    $('pre code').each(function(){
+			        var lines = $(this).text().split('\n').length - 1;
+			        var $numbering = $('<ul/>').addClass('pre-numbering');
+			        $(this)
+			            .addClass('has-numbering')
+			            .parent()
+			            .append($numbering);
+			        for(i=1;i<=lines;i++){
+			            $numbering.append($('<li/>').text(i));
+			        }
+			    });
+			});
+	</script>
 {% endblock %}
 
 {% block title %}{{ post.title }}{% endblock %}
