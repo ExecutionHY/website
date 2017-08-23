@@ -17,4 +17,5 @@ from django.conf.urls import include, url
 
 urlpatterns = [
     url(r'^$', 'puncher.views.puncher_home', name='puncher_home'),
+    url(r'^daily/$', 'puncher.views.puncher_daily', name='puncher_daily'),
 ]

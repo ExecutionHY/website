@@ -1821,7 +1821,6 @@
 		position: relative;
 		-webkit-appearance: none;
 		display: block;
-		border: 0;
 		outline: 0;
 		background: #fff;
 		background: rgba(255, 255, 255, 0.75);
@@ -2258,6 +2257,14 @@
 				background-color: #e8edec;
 			}
 
+			#main > section.narrow {
+				padding-top: 0.5em;
+				padding-bottom: 0.5em;
+			}
+
+			#main > section.white {
+				background-color: white;
+			}
 /* Wide */
 
 	@media screen and (min-width: 961px) and (max-width: 1880px) {
@@ -2699,3 +2706,49 @@
 }
 
 .pagination a:hover:not(.active) {background-color: gainsboro;}
+
+/* For puncher */
+
+/* colorblock  */
+
+.colorblock {
+	width: 100%;
+	height: 1em;
+	margin-bottom: 5%;
+}
+
+	.colorblock.c0 {
+		background: deepskyblue;
+	}
+	.colorblock.c1 {
+		background: lawngreen;
+	}
+	.colorblock.c2 {
+		background: gold;
+	}
+	.colorblock.c3 {
+		background: orangered;
+	}
+	.colorblock.c4 {
+		background: rebeccapurple;
+	}
+	.colorblock.c5 {
+		background: hotpink;
+	}
+	.colorblock.c6 {
+		background: lightsteelblue;
+	}
+	.colorblock.c7 {
+		background: lightseagreen;
+	}
+	.colorblock.c8 {
+		background: brown;
+	}
+	.colorblock.c9 {
+		background: sandybrown;
+	}
+
+
+
+
+
