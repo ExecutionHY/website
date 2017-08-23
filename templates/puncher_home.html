@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Execution's Puncher{% endblock %}
+
+{% block user %}
+    <span class="image avatar48"><img src="/static/img/avatar.jpg" alt="" /></span>
+    <h1 id="title">Execution</h1>
+    <p>DeadLiner</p>
+{% endblock %}
+
+{% block sidebar %}
+	<li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
+
+{% endblock %}
+
+{% block content %}
+
+
+    <!-- Search -->
+    <section id="title" class="top dark center">
+        <div class="container">
+	        <header>
+              <h2>Puncher</h2>
+              <p>兴趣使然的打卡器</p>
+          </header>
+        </div>
+    </section>
+
+    <!-- List -->
+    <section id="list" class="body">
+      <div class="container">
+
+			<form method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+
+				<div class="row" style="max-width: 500px; margin: auto;">
+					<div class="12u$">
+						<input type="text" name="email" placeholder="Email" />
+					</div>
+					<div class="12u$">
+						<input type="password" name="password" placeholder="Password" />
+					</div>
+
+					<div class="12u$">
+						<input type="submit" style="width: 100%;" value="Login"/>
+					</div>
+				</div>
+			</form>
+
+
+      </div>
+    </section>
+
+
+{% endblock %}

@@ -14,16 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include(blog_urls))
 """
 from django.conf.urls import include, url
-from django.contrib import admin
-from settings import STATIC_ROOT
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^static/(?P<path>.*)', 'django.views.static.serve', {'document_root': STATIC_ROOT}),
-
-    url(r'^$', 'website.views.home', name='home'),
-    url(r'^blog/', include('blog.urls')),
-    url(r'^facer/', include('facer.urls')),
-    url(r'^puncher/', include('puncher.urls')),
-    url(r'^composer/$', 'composer.views.composer_home', name='composer_home')
+    url(r'^$', 'puncher.views.puncher_home', name='puncher_home'),
 ]
