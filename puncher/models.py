@@ -6,13 +6,13 @@ from django.contrib import admin
 
 class User(models.Model):
 	email = models.EmailField(u"email")
-	password = models.CharField(max_length=64)
+	password = models.CharField(u"password", max_length=64)
 
 	class Meta:
 		ordering = ['-id']
 
 	def __unicode__(self):
-		return self.email
+		return str(self.email)
 
 
 class UserTask(models.Model):
@@ -25,19 +25,19 @@ class UserTask(models.Model):
 		ordering = ['-id']
 
 	def __unicode__(self):
-		return self.id
+		return str(self.id)
 
 
 class DailyTask(models.Model):
-	date = models.DateField()
+	date = models.DateTimeField(auto_now_add=True)
 	user = models.ForeignKey(User, verbose_name="email")
-	taskNo = models.IntegerField()
+	taskNo = models.CharField(max_length=1)
 
 	class Meta:
 		ordering = ['-id']
 
 	def __unicode__(self):
-		return self.id
+		return str(self.id)
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -57,3 +57,4 @@ class DailyTaskAdmin(admin.ModelAdmin):
 	date = models.ForeignKey(DailyTask, verbose_name="date")
 	user = models.ForeignKey(DailyTask, verbose_name="user")
 	taskNo = models.ForeignKey(DailyTask, verbose_name="taskNo")
+	list_display = ('date', 'user', 'taskNo')
