@@ -5,8 +5,8 @@ from django.contrib import admin
 
 
 class User(models.Model):
-	email = models.EmailField(u"email")
-	password = models.CharField(u"password", max_length=64)
+	email = models.EmailField()
+	password = models.CharField(max_length=64)
 
 	class Meta:
 		ordering = ['-id']
@@ -19,7 +19,7 @@ class UserTask(models.Model):
 	user = models.ForeignKey(User, verbose_name="email")
 	task = models.CharField(max_length=64)
 	interval = models.IntegerField(default=1)
-	number = models.IntegerField()
+	number = models.CharField(max_length=1)
 
 	class Meta:
 		ordering = ['-id']

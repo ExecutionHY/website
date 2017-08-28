@@ -15,8 +15,7 @@
 
 {% block content %}
 
-
-    <!-- Search -->
+    <!-- Title -->
     <section id="title" class="top dark center narrow" style="background: darkslateblue">
 
         <div class="container">
@@ -27,8 +26,66 @@
         </div>
     </section>
 
+		<!-- Todo_list -->
+    <section id="todo" class="body narrow center unselectable">
+      <div class="container" id="todo-container">
+	      {% for todo in todo_list %}
+		      <div class="coloricon" id="icon{{ todo.task.number }}" onmouseover='Move_obj("icon{{ todo.task.number }}")'><span class="icon fa-circle-o"></span></div>
+
+
+
+	        <div class="colorblock c{{ todo.task.number }} thick" style="text-align: center; color: white">
+		        {{ todo.task.task }} | {{ todo.delta }} / {{ todo.task.interval }}
+	        </div>
+	      {% endfor %}
+
+        <script type="text/javascript">
+					var drag_ = false;
+					var D = new Function('obj', 'return document.getElementById(obj);');
+					var oevent = new Function('e', 'if (!e) e = window.event;return e');
+					var fw = document.getElementById("todo-container").clientWidth;
+					var offset_, obj_;
+					function Move_obj(obj) {
+						obj_ = obj;
+						D(obj).onmousedown = function (e) {
+							drag_ = true;
+							with (this) {
+								style.position = "relative";
+								var temp1 = clientLeft;
+								var x = oevent(e).clientX;
+								document.onmousemove = function (e) {
+									if (!drag_) return false;
+									if (style.color == "white") return false;
+									with (this) {
+										offset_ = (temp1 + oevent(e).clientX - x)/fw*100;
+										if (offset_ > 90) {
+											offset_ = 92 - 180 / offset_;
+										}
+										style.left = offset_ + "%";
+									}
+								}
+							}
+						}
+						document.onmouseup = new Function(' Set_obj();');
+					}
+	        function Set_obj() {
+		        drag_ = false;
+		        if (offset_ >= 80) {
+							D(obj_).style.left = "92%";
+			        D(obj_).firstElementChild.className = "icon fa-chevron-circle-down";
+		          D(obj_).style.color = "white";
+						} else {
+							D(obj_).style.left = "0";
+						}
+
+	        }
+				</script>
+
+      </div>
+    </section>
+
 		<!-- Display -->
-    <section id="list" class="white narrow center">
+    <section id="display" class="white narrow center unselectable">
       <div class="container">
 	      <div class="row">
 		      {% for date in dates %}
