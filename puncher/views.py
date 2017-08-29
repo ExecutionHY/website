@@ -45,6 +45,7 @@ def puncher_daily(request):
 
 	# to_do list for today
 	todo_list = []
+	todo_count = 0
 	my_tasks = UserTask.objects.filter(user=user)
 	for task in my_tasks:
 		last_task = tasks.filter(taskNo=task.number).last()
@@ -59,6 +60,7 @@ def puncher_daily(request):
 			'delta': delta,
 		}
 		todo_list.append(todo)
+		todo_count += 1
 
 	todo_list = sorted(todo_list, key=lambda todo: -float(todo['delta']/float(todo['task'].interval)))
 
@@ -67,6 +69,7 @@ def puncher_daily(request):
 		'days': days,
 		'dates': dates,
 		'todo_list': todo_list,
+		'todo_count': todo_count,
 	}
 
 	return render_to_response(

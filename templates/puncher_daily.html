@@ -10,6 +10,9 @@
 
 {% block sidebar %}
 	<li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
+	<li><a href="#title" id="title-link" class="skel-layers-ignoreHref"><span class="icon fa-home">itle</span></a></li>
+	<li><a href="#todo" id="todo-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Todo</span></a></li>
+	<li><a href="#display" id="display-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Display</span></a></li>
 
 {% endblock %}
 
@@ -29,8 +32,77 @@
 		<!-- Todo_list -->
     <section id="todo" class="body narrow center unselectable">
       <div class="container" id="todo-container">
+        <script type="text/javascript">
+
+					var list;
+					var touch_before, touch_after, x_before, x_after;
+
+					window.onload = function() {
+						list = document.getElementsByClassName("coloricon");
+						for (let i = 0; i < list.length; i++) {
+					    list[i].addEventListener("mousedown", function() { down(list[i]); }, false);
+					    list[i].addEventListener("touchstart", function() { down(list[i]); }, false);
+						}
+					}
+
+
+					var drag_ = false;
+					var D = new Function('obj', 'return document.getElementById(obj);');
+					var oevent = new Function('e', 'if (!e) e = window.event;return e');
+					var fw = document.getElementById("todo-container").clientWidth;
+					var offset_, obj_;
+
+					function down(obj) {
+						if (drag_ == true) setInterval(Set_obj, 30);
+						drag_ = true;
+						obj_ = obj;
+						x_before = obj_.clientLeft;
+
+						if (event.touches) touch_before = event.touches[0].clientX;
+						else touch_before = event.clientX;
+
+						document.addEventListener("mousemove", function() { move(); }, false);
+						document.addEventListener("touchmove", function() { move(); }, false);
+						document.addEventListener("mouseup", function() {drag_ = false; setInterval(Set_obj, 30);}, false);
+						document.addEventListener("touchend", function() {drag_ = false; setInterval(Set_obj, 30);}, false);
+					}
+
+					function move() {
+						if (!drag_) return;
+						if (obj_.style.color == "white") return;
+
+						if (event.touches) touch_after = event.touches[0].clientX;
+						else touch_after = event.clientX;
+						console.log(event);
+
+						offset_ = (x_before + touch_after- touch_before)/fw*100;
+						if (offset_ > 88) offset_ = 90 - 176 / offset_; // smooth
+						obj_.style.left = offset_ + "%";
+
+					}
+
+	        function Set_obj() {
+		        if (offset_ <= 0) return;
+		        if (offset_ >= 90) {
+			        obj_.firstElementChild.className = "icon fa-chevron-circle-down";
+		          obj_.style.color = "white";
+			        offset_ = 0;
+			        return;
+		        }
+		        if (offset_ >= 60) {
+							offset_ += 1;
+			        if (offset_ > 90) offset_ = 90;
+						} else {
+			        offset_ -= 1;
+			        if (offset_ < 0) offset_ = 0;
+						}
+		        obj_.style.left = offset_ + "%";
+	        }
+
+
+				</script>
 	      {% for todo in todo_list %}
-		      <div class="coloricon" id="icon{{ todo.task.number }}" onmouseover='Move_obj("icon{{ todo.task.number }}")'><span class="icon fa-circle-o"></span></div>
+		      <div class="coloricon" id="icon{{ todo.task.number }}" style="position: relative;"><span class="icon fa-circle-o"></span></div>
 
 
 
@@ -39,49 +111,7 @@
 	        </div>
 	      {% endfor %}
 
-        <script type="text/javascript">
-					var drag_ = false;
-					var D = new Function('obj', 'return document.getElementById(obj);');
-					var oevent = new Function('e', 'if (!e) e = window.event;return e');
-					var fw = document.getElementById("todo-container").clientWidth;
-					var offset_, obj_;
-					function Move_obj(obj) {
-						obj_ = obj;
-						D(obj).onmousedown = function (e) {
-							drag_ = true;
-							with (this) {
-								style.position = "relative";
-								var temp1 = clientLeft;
-								var x = oevent(e).clientX;
-								document.onmousemove = function (e) {
-									if (!drag_) return false;
-									if (style.color == "white") return false;
-									with (this) {
-										offset_ = (temp1 + oevent(e).clientX - x)/fw*100;
-										if (offset_ > 90) {
-											offset_ = 92 - 180 / offset_;
-										}
-										style.left = offset_ + "%";
-									}
-								}
-							}
-						}
-						document.onmouseup = new Function(' Set_obj();');
-					}
-	        function Set_obj() {
-		        drag_ = false;
-		        if (offset_ >= 80) {
-							D(obj_).style.left = "92%";
-			        D(obj_).firstElementChild.className = "icon fa-chevron-circle-down";
-		          D(obj_).style.color = "white";
-						} else {
-							D(obj_).style.left = "0";
-						}
 
-	        }
-				</script>
-
-      </div>
     </section>
 
 		<!-- Display -->
@@ -89,7 +119,7 @@
       <div class="container">
 	      <div class="row">
 		      {% for date in dates %}
-		        <div class="2u" style="text-align: center">{{ date|date:"M-d" }}</div>
+		        <div class="2u" style="text-align: center; font-size: smaller">{{ date|date:"M-d" }}</div>
 		      {% endfor %}
 	      </div>
 
