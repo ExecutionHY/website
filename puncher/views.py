@@ -32,11 +32,11 @@ class PaymentForm(forms.Form):
 def puncher_daily(request):
 
 	# get user
-	uid = request.GET.get('uid', 1)
-	if uid is None:
-		user = User.objects.first()
-	else:
+	if 'uid' in request.GET:
+		uid = request.GET.get('uid')
 		user = User.objects.filter(id=uid).first()
+	else:
+		user = None
 
 	# tasks for recent 6 days, divided by day
 	tasks = DailyTask.objects.filter(user=user)
