@@ -69,12 +69,35 @@ class CheckPoint(models.Model):
 	campus = models.FloatField(default=0)
 	time = models.DateTimeField(auto_now_add=True)
 
+	class Meta:
+		ordering = ['-id']
+
+	def __unicode__(self):
+		return str(self.id)
+
+
+class PaymentKind(models.Model):
+	kind = models.CharField(max_length=64)
+
+	class Meta:
+		ordering = ['-id']
+
+	def __unicode__(self):
+		return str(self.kind)
+
 
 class Payment(models.Model):
 	user = models.ForeignKey(User, verbose_name="email")
 	info = models.CharField(max_length=64)
 	value = models.FloatField(default=0)
-	time = models.DateField()
+	kind = models.ForeignKey(PaymentKind, verbose_name="kind", null=True)
+	time = models.DateTimeField()
+
+	class Meta:
+		ordering = ['-id']
+
+	def __unicode__(self):
+		return str(self.id)
 
 
 class CheckPointAdmin(admin.ModelAdmin):
@@ -85,14 +108,18 @@ class CheckPointAdmin(admin.ModelAdmin):
 	time = models.ForeignKey(CheckPoint, verbose_name="time")
 	list_display = ('user', 'wechat', 'alipay', 'campus', 'time')
 
-formats = ['%Y-%m-%d',      # '2006-10-25'
-	'%m/%d/%Y',       # '10/25/2006'
-	'%m/%d/%y']       # '10/25/06'
+
+class PaymentKindAdmin(admin.ModelAdmin):
+	kind = models.ForeignKey(PaymentKind, verbose_name="kind")
+	list_display = ('kind', )
+
+formats = ['%Y-%m-%d %H:%M',    # '2006-10-25 14:30:59'
+]
 
 
 class PaymentAdmin(admin.ModelAdmin):
 	user = models.ForeignKey(Payment, verbose_name="email")
 	info = models.ForeignKey(Payment, verbose_name="info")
 	value = models.ForeignKey(Payment, verbose_name="value")
-	time = forms.DateField(input_formats=formats)
+	time = forms.DateTimeField(input_formats=formats)
 	list_display = ('user', 'info', 'value', 'time')

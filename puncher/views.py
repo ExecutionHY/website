@@ -1,8 +1,9 @@
 from django.shortcuts import render, render_to_response, get_object_or_404, HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
 import datetime
+from django import forms
 
-from models import User, UserTask, DailyTask
+from models import User, UserTask, DailyTask, CheckPoint, Payment, PaymentKind
 
 # Create your views here.
 
@@ -17,11 +18,20 @@ def puncher_home(request):
 		context_instance=RequestContext(request)
 	)
 
+formats = ['%Y-%m-%d %H:%M',    # '2006-10-25 14:30:59'
+]
+
+
+class PaymentForm(forms.Form):
+	info = forms.CharField(label='info', max_length=64)
+	value = forms.FloatField(label='value')
+	kind = forms.CharField(label='kind', max_length=64)
+	time = forms.DateTimeField(label='time', input_formats=formats)
+
 
 def puncher_daily(request):
 
 	# get user
-	request.encoding = 'utf-8'
 	uid = request.GET.get('uid', 1)
 	if uid is None:
 		user = User.objects.first()
@@ -64,12 +74,38 @@ def puncher_daily(request):
 
 	todo_list = sorted(todo_list, key=lambda todo: -float(todo['delta']/float(todo['task'].interval)))
 
+	# money management
+	checkpoint = CheckPoint.objects.filter(user=user).last()
+	amount = checkpoint.wechat + checkpoint.alipay + checkpoint.campus
+	payments_after_check = Payment.objects.filter(user=user, time__gt=checkpoint.time)
+	for payment in payments_after_check:
+		amount += payment.value
+
+	kind_list = PaymentKind.objects.all()
+
+	if request.method == 'POST':
+		form = PaymentForm(request.POST)
+		if form.is_valid():
+			# get payment data
+			info = form.cleaned_data['info']
+			value = form.cleaned_data['value']
+			kind_str = form.cleaned_data['kind']
+			kind = PaymentKind.objects.get(kind=kind_str)
+			time = form.cleaned_data['time']
+
+			# create new payment
+			Payment.objects.create(user=user, info=info, value=value, kind=kind, time=time)
+
+			HttpResponseRedirect('/puncher/daily/?uid=1')
+
 	ctx = {
 		'user': user,
 		'days': days,
 		'dates': dates,
 		'todo_list': todo_list,
 		'todo_count': todo_count,
+		'amount': amount,
+		'kind_list': kind_list,
 	}
 
 	return render_to_response(

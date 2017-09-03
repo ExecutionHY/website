@@ -104,13 +104,12 @@
 	      {% for todo in todo_list %}
 		      <div class="coloricon" id="icon{{ todo.task.number }}" style="position: relative;"><span class="icon fa-circle-o"></span></div>
 
-
-
 	        <div class="colorblock c{{ todo.task.number }} thick" style="text-align: center; color: white">
 		        {{ todo.task.task }} | {{ todo.delta }} / {{ todo.task.interval }}
 	        </div>
 	      {% endfor %}
 
+      </div>
 
     </section>
 
@@ -136,6 +135,38 @@
 
       </div>
     </section>
+
+		<section id="money" class="white narrow center unselectable">
+      <div class="container">Amount: ¥{{ amount }}</div>
+			<div class="container">
+				<form method="post" id="form" enctype="multipart/form-data">
+					{% csrf_token %}
+
+						<div class="row" style="max-width: 500px; margin: auto;">
+							<div class="12u$">
+								<input type="text" name="info" placeholder="info" />
+							</div>
+							<div class="12u$">
+								<input type="text" name="value" placeholder="value" />
+							</div>
+							<div class="4u">Kind</div>
+							<div class="8u$">
+								{% for kind in kind_list %}
+									<label><input type="radio" name="kind" value="{{ kind }}">{{ kind }}</label>
+								{% endfor %}
+							</div>
+							<div class="12u$">
+								<input type="text" name="time" placeholder="time" />
+							</div>
+
+							<div class="12u$">
+								<input type="submit" style="width: 100%;" value="Add Payment"/>
+							</div>
+						</div>
+				</form>
+			</div>
+
+		</section>
 
 
 {% endblock %}
