@@ -96,7 +96,7 @@ def puncher_daily(request):
 			# create new payment
 			Payment.objects.create(user=user, info=info, value=value, kind=kind, time=time)
 
-			HttpResponseRedirect('/puncher/daily/?uid=1')
+			return HttpResponseRedirect('')
 
 	ctx = {
 		'user': user,
