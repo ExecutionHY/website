@@ -535,6 +535,8 @@ http://www.steegle.com/websites/google-sites-howtos/get-found-google-search#TOC-
 
 ### Puncher
 
-- 0.1# database design
+- 0.1 # database design
 - 0.2 # colorblock display
 - 0.3 # data filter by date
+- 0.4 # slider design
+- 0.5 # slider design / mouse&touch
