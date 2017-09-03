@@ -143,20 +143,27 @@
 					{% csrf_token %}
 
 						<div class="row" style="max-width: 500px; margin: auto;">
-							<div class="12u$">
-								<input type="text" name="info" placeholder="info" />
+
+							<div class="3u">Info</div>
+							<div class="9u$">
+								<input type="text" name="info" placeholder="enter..." />
 							</div>
-							<div class="12u$">
-								<input type="text" name="value" placeholder="value" />
+
+							<div class="3u">Value</div>
+							<div class="9u$">
+								<input type="text" name="value" value="-10" />
 							</div>
-							<div class="4u">Kind</div>
-							<div class="8u$">
+
+							<div class="3u">Kind</div>
+							<div class="9u$">
 								{% for kind in kind_list %}
 									<label><input type="radio" name="kind" value="{{ kind }}">{{ kind }}</label>
 								{% endfor %}
 							</div>
-							<div class="12u$">
-								<input type="text" name="time" placeholder="time" />
+
+							<div class="3u">Time</div>
+							<div class="9u$">
+								<input type="text" name="time" value="{{ today|date:"Y-m-d" }} 00:00" />
 							</div>
 
 							<div class="12u$">

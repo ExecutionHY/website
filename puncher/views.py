@@ -96,7 +96,7 @@ def puncher_daily(request):
 			# create new payment
 			Payment.objects.create(user=user, info=info, value=value, kind=kind, time=time)
 
-			return HttpResponseRedirect('?uid=1')
+			return HttpResponseRedirect('?uid='+uid)
 
 	ctx = {
 		'user': user,
@@ -106,6 +106,7 @@ def puncher_daily(request):
 		'todo_count': todo_count,
 		'amount': amount,
 		'kind_list': kind_list,
+		'today': today,
 	}
 
 	return render_to_response(
