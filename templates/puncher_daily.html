@@ -10,9 +10,10 @@
 
 {% block sidebar %}
 	<li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
-	<li><a href="#title" id="title-link" class="skel-layers-ignoreHref"><span class="icon fa-home">itle</span></a></li>
 	<li><a href="#todo" id="todo-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Todo</span></a></li>
-	<li><a href="#display" id="display-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Display</span></a></li>
+	<li><a href="#display" id="display-link" class="skel-layers-ignoreHref"><span class="icon fa-list">Display</span></a></li>
+	<li><a href="#money" id="money-link" class="skel-layers-ignoreHref"><span class="icon fa-money">Money</span></a></li>
+	<li><a href="#add" id="add-link" class="skel-layers-ignoreHref"><span class="icon fa-plus">Add</span></a></li>
 
 {% endblock %}
 
@@ -137,7 +138,27 @@
     </section>
 
 		<section id="money" class="white narrow center unselectable">
-      <div class="container">Amount: ¥{{ amount }}</div>
+      <div class="container">
+        <div class="row" style="margin: auto">
+		      <div class="6u"><h3>Amount: ¥{{ amount }}</h3></div>
+		      <div class="6u$"><h3>Monthly: ¥{{ monthly }}</h3></div>
+        </div>
+	      <div class="row">
+		      <div class="1u">{{ today|date:"M" }}</div>
+	        <div class="11u$">
+		        {% for bill in bill_list %}
+	            <div class="colorblock c{{ bill.index }} thick databar" style="width: {{ bill.percentage }}%; color: white">
+		            {{ bill.kind }}: {{ bill.sum }}
+	            </div>
+		        {% endfor %}
+	        </div>
+	      </div>
+      </div>
+
+		</section>
+
+
+		<section id="add" class="white narrow center unselectable">
 			<div class="container">
 				<form method="post" id="form" enctype="multipart/form-data">
 					{% csrf_token %}

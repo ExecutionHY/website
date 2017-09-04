@@ -85,13 +85,12 @@
 /* colorblock  */
 
 .colorblock {
-	width: 100%;
 	height: 1em;
 	margin-bottom: 0.3em;
 }
 
 	.colorblock.thick {
-		height: 3em;
+		height: 2em;
 	}
 
 	.colorblock.c0 {
@@ -123,6 +122,10 @@
 	}
 	.colorblock.c9 {
 		background: sandybrown;
+	}
+
+	.colorblock.databar {
+		float: left;
 	}
 
 .coloricon {
