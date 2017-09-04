@@ -5,13 +5,16 @@ from django import forms
 
 from models import User, UserTask, DailyTask, Checkpoint, Payment, PaymentKind
 
+
 # Create your views here.
 
 
 def puncher_home(request):
-
+	# get the first user -- Execution
 	user = User.objects.last()
-	# money management
+
+	# get some example display
+
 	checkpoint = Checkpoint.objects.filter(user=user).last()
 	amount = checkpoint.wechat + checkpoint.alipay + checkpoint.campus
 	payments_after_check = Payment.objects.filter(user=user, time__gt=checkpoint.time)
@@ -27,7 +30,7 @@ def puncher_home(request):
 	monthly_out = 0
 	for payment in payments_this_month:
 		if payment.value < 0:
-			bills[payment.kind.id-1] += payment.value
+			bills[payment.kind.id - 1] += payment.value
 			monthly_out += payment.value
 		else:
 			monthly_in += payment.value
@@ -41,12 +44,25 @@ def puncher_home(request):
 
 		if bills[i] < 0:
 			bill = {
-				'kind': PaymentKind.objects.get(id=i+1),
+				'kind': PaymentKind.objects.get(id=i + 1),
 				'index': i,
 				'sum': bills[i],
 				'percentage': percentage,
 			}
 			bill_list.append(bill)
+
+	# deal with login request
+	if request.method == 'POST':
+		email = request.POST.get('email')
+		password = request.POST.get('password')
+		user = User.objects.filter(email=email)
+		if user:
+			if user.first().password == password:
+				return HttpResponseRedirect('/puncher/daily/?uid=' + user.first().id.__str__() + '&pwd=' + password)
+		msg = "login failed"
+
+	else:
+		msg = None
 
 	ctx = {
 		'monthly_in': monthly_in,
@@ -54,6 +70,7 @@ def puncher_home(request):
 		'kind_list': kind_list,
 		'bill_list': bill_list,
 		'today': today,
+		'msg': msg,
 	}
 
 	return render_to_response(
@@ -62,8 +79,9 @@ def puncher_home(request):
 		context_instance=RequestContext(request)
 	)
 
-formats = ['%Y-%m-%d %H:%M',    # '2006-10-25 14:30:59'
-]
+
+formats = ['%Y-%m-%d %H:%M',  # '2006-10-25 14:30:59'
+           ]
 
 
 class PaymentForm(forms.Form):
@@ -80,18 +98,19 @@ class CheckpointForm(forms.Form):
 
 
 def puncher_daily(request):
-
 	# get user
 	if 'uid' in request.GET:
 		uid = request.GET.get('uid')
 		pwd = request.GET.get('pwd')
 		user = User.objects.filter(id=uid).first()
+		# check password
 		if user.password != pwd:
 			user = None
 			uid = -1
 	else:
 		user = None
 		uid = -1
+		pwd = None
 
 	# tasks for recent 6 days, divided by day
 	tasks = DailyTask.objects.filter(user=user)
@@ -127,30 +146,34 @@ def puncher_daily(request):
 		todo_list.append(todo)
 		todo_count += 1
 
-	todo_list = sorted(todo_list, key=lambda todo: -float(todo['delta']/float(todo['task'].interval)))
+	todo_list = sorted(todo_list, key=lambda todo: -float(todo['delta'] / float(todo['task'].interval)))
 
-	# money management
+	# get current money amount
 	checkpoint = Checkpoint.objects.filter(user=user).first()
 	amount = checkpoint.wechat + checkpoint.alipay + checkpoint.campus
 	payments_after_check = Payment.objects.filter(user=user, time__gt=checkpoint.time)
 	for payment in payments_after_check:
 		amount += payment.value
 
+	# get the data of this month
 	payments_this_month = Payment.objects.filter(user=user, time__year=today.year, time__month=today.month)
-	kind_list = PaymentKind.objects.all()
 
-	bills = [0] * kind_list.first().id
+	# the last kind is list on the top
+	# sum up money-in & out for this month
+	last_kind_id = PaymentKind.objects.first().id
+	bills = [0] * last_kind_id
 	monthly_in = 0
 	monthly_out = 0
 	for payment in payments_this_month:
 		if payment.value < 0:
-			bills[payment.kind.id-1] += payment.value
+			bills[payment.kind.id - 1] += payment.value
 			monthly_out += payment.value
 		else:
 			monthly_in += payment.value
 
+	# build a list for template to use
 	bill_list = []
-	for i in range(kind_list.first().id):
+	for i in range(last_kind_id):
 		if monthly_out == 0:
 			percentage = 0
 		else:
@@ -158,13 +181,14 @@ def puncher_daily(request):
 
 		if bills[i] < 0:
 			bill = {
-				'kind': PaymentKind.objects.get(id=i+1),
+				'kind': PaymentKind.objects.get(id=i + 1),
 				'index': i,
 				'sum': bills[i],
 				'percentage': percentage,
 			}
 			bill_list.append(bill)
 
+	# deal with request of adding payment & checkpoint
 	if request.method == 'POST':
 		form = PaymentForm(request.POST)
 		if form.is_valid():
@@ -178,7 +202,7 @@ def puncher_daily(request):
 			# create new payment
 			Payment.objects.create(user=user, info=info, value=value, kind=kind, time=time)
 
-			return HttpResponseRedirect('?uid='+uid)
+			return HttpResponseRedirect('?uid=' + uid + '&pwd=' + pwd)
 
 		else:
 			form = CheckpointForm(request.POST)
@@ -189,14 +213,16 @@ def puncher_daily(request):
 				alipay = form.cleaned_data['alipay']
 				campus = form.cleaned_data['campus']
 
-				# create new payment
+				# create new checkpoint
 				Checkpoint.objects.create(user=user, wechat=wechat, alipay=alipay, campus=campus)
+				# create a patch payment
 				amount_current = wechat + alipay + campus
-				kind_patch = PaymentKind.objects.get(kind="other")
-				Payment.objects.create(user=user, info="patch", value=amount_current-amount, kind=kind_patch, time=datetime.datetime.now())
+				if amount_current != amount:
+					kind_patch = PaymentKind.objects.get(kind="other")
+					Payment.objects.create(user=user, info="patch", value=amount_current - amount,
+					                       kind=kind_patch, time=datetime.datetime.now())
 
-				return HttpResponseRedirect('?uid='+uid)
-
+				return HttpResponseRedirect('?uid=' + uid + '&pwd=' + pwd)
 
 	ctx = {
 		'user': user,
@@ -208,9 +234,13 @@ def puncher_daily(request):
 		'amount': amount,
 		'monthly_in': monthly_in,
 		'monthly_out': monthly_out,
-		'kind_list': kind_list,
+		'kind_list': PaymentKind.objects.all(),
 		'bill_list': bill_list,
 		'today': today,
+
+		'last_wechat': checkpoint.wechat,
+		'last_alipay': checkpoint.alipay,
+		'last_campus': checkpoint.campus,
 	}
 
 	return render_to_response(

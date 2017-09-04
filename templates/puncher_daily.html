@@ -9,8 +9,8 @@
 {% endblock %}
 
 {% block sidebar %}
-	<li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
-	<li><a href="#todo" id="todo-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Todo</span></a></li>
+	<li><a href="/puncher" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Puncher</span></a></li>
+	<li><a href="#todo" id="todo-link" class="skel-layers-ignoreHref"><span class="icon fa-list">Todo</span></a></li>
 	<li><a href="#display" id="display-link" class="skel-layers-ignoreHref"><span class="icon fa-list">Display</span></a></li>
 	<li><a href="#money" id="money-link" class="skel-layers-ignoreHref"><span class="icon fa-money">Money</span></a></li>
 	<li><a href="#add" id="add-link" class="skel-layers-ignoreHref"><span class="icon fa-plus">Add</span></a></li>
@@ -206,17 +206,17 @@
 
 							<div class="3u">Wechat</div>
 							<div class="9u$">
-								<input type="text" name="wechat" value="10" />
+								<input type="text" name="wechat" value="{{ last_wechat }}" />
 							</div>
 
 							<div class="3u">Alipay</div>
 							<div class="9u$">
-								<input type="text" name="alipay" value="10" />
+								<input type="text" name="alipay" value="{{ last_alipay }}" />
 							</div>
 
 							<div class="3u">Campus</div>
 							<div class="9u$">
-								<input type="text" name="campus" value="10" />
+								<input type="text" name="campus" value="{{ last_campus }}" />
 							</div>
 
 							<div class="12u$">

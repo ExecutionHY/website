@@ -152,3 +152,7 @@
    -ms-user-select: none;
    user-select: none;
 }
+
+.pre-numbering {
+	float: left;
+}

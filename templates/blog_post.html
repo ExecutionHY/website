@@ -10,14 +10,15 @@
 			$(function(){
 			    $('pre code').each(function(){
 			        var lines = $(this).text().split('\n').length - 1;
-			        var $numbering = $('<ul/>').addClass('pre-numbering');
-			        $(this)
-			            .addClass('has-numbering')
-			            .parent()
-			            .append($numbering);
+			        var $numbering = $('<div/>').addClass('pre-numbering');
+			        $(this).addClass('has-numbering');
+				      $(this).parent().prepend($numbering);
+
+				      var str = "";
 			        for(i=1;i<=lines;i++){
-			            $numbering.append($('<li/>').text(i));
+				          str += i+"\n"
 			        }
+			        $numbering.html(str);
 			    });
 			});
 	</script>

@@ -121,5 +121,6 @@ class PaymentAdmin(admin.ModelAdmin):
 	user = models.ForeignKey(Payment, verbose_name="email")
 	info = models.ForeignKey(Payment, verbose_name="info")
 	value = models.ForeignKey(Payment, verbose_name="value")
+	kind = models.ForeignKey(Payment, verbose_name="kind")
 	time = forms.DateTimeField(input_formats=formats)
-	list_display = ('user', 'info', 'value', 'time')
+	list_display = ('user', 'info', 'value', 'kind', 'time')

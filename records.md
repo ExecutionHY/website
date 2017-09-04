@@ -544,3 +544,5 @@ http://www.steegle.com/websites/google-sites-howtos/get-found-google-search#TOC-
 - 1.0 # payment puncher
 - 1.1 # monthly data bar
 - 1.2 # execution's bill
+- 1.3 # add checkpoint interface
+
