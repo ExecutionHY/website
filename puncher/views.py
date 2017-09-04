@@ -3,7 +3,7 @@ from django.template import RequestContext
 import datetime
 from django import forms
 
-from models import User, UserTask, DailyTask, CheckPoint, Payment, PaymentKind
+from models import User, UserTask, DailyTask, Checkpoint, Payment, PaymentKind
 
 # Create your views here.
 
@@ -12,7 +12,7 @@ def puncher_home(request):
 
 	user = User.objects.last()
 	# money management
-	checkpoint = CheckPoint.objects.filter(user=user).last()
+	checkpoint = Checkpoint.objects.filter(user=user).last()
 	amount = checkpoint.wechat + checkpoint.alipay + checkpoint.campus
 	payments_after_check = Payment.objects.filter(user=user, time__gt=checkpoint.time)
 	for payment in payments_after_check:
@@ -73,12 +73,22 @@ class PaymentForm(forms.Form):
 	time = forms.DateTimeField(label='time', input_formats=formats)
 
 
+class CheckpointForm(forms.Form):
+	wechat = forms.FloatField()
+	alipay = forms.FloatField()
+	campus = forms.FloatField()
+
+
 def puncher_daily(request):
 
 	# get user
 	if 'uid' in request.GET:
 		uid = request.GET.get('uid')
+		pwd = request.GET.get('pwd')
 		user = User.objects.filter(id=uid).first()
+		if user.password != pwd:
+			user = None
+			uid = -1
 	else:
 		user = None
 		uid = -1
@@ -120,7 +130,7 @@ def puncher_daily(request):
 	todo_list = sorted(todo_list, key=lambda todo: -float(todo['delta']/float(todo['task'].interval)))
 
 	# money management
-	checkpoint = CheckPoint.objects.filter(user=user).last()
+	checkpoint = Checkpoint.objects.filter(user=user).first()
 	amount = checkpoint.wechat + checkpoint.alipay + checkpoint.campus
 	payments_after_check = Payment.objects.filter(user=user, time__gt=checkpoint.time)
 	for payment in payments_after_check:
@@ -169,6 +179,24 @@ def puncher_daily(request):
 			Payment.objects.create(user=user, info=info, value=value, kind=kind, time=time)
 
 			return HttpResponseRedirect('?uid='+uid)
+
+		else:
+			form = CheckpointForm(request.POST)
+
+			if form.is_valid():
+				# get payment data
+				wechat = form.cleaned_data['wechat']
+				alipay = form.cleaned_data['alipay']
+				campus = form.cleaned_data['campus']
+
+				# create new payment
+				Checkpoint.objects.create(user=user, wechat=wechat, alipay=alipay, campus=campus)
+				amount_current = wechat + alipay + campus
+				kind_patch = PaymentKind.objects.get(kind="other")
+				Payment.objects.create(user=user, info="patch", value=amount_current-amount, kind=kind_patch, time=datetime.datetime.now())
+
+				return HttpResponseRedirect('?uid='+uid)
+
 
 	ctx = {
 		'user': user,

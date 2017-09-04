@@ -161,7 +161,7 @@
 
 		<section id="add" class="white narrow center unselectable">
 			<div class="container">
-				<form method="post" id="form" enctype="multipart/form-data">
+				<form method="post" id="PaymentForm" enctype="multipart/form-data">
 					{% csrf_token %}
 
 						<div class="row" style="max-width: 500px; margin: auto;">
@@ -190,6 +190,37 @@
 
 							<div class="12u$">
 								<input type="submit" style="width: 100%;" value="Add Payment"/>
+							</div>
+						</div>
+				</form>
+			</div>
+
+		</section>
+
+		<section id="checkpoint" class="white narrow center unselectable">
+			<div class="container">
+				<form method="post" id="CheckpointForm" enctype="multipart/form-data">
+					{% csrf_token %}
+
+						<div class="row" style="max-width: 500px; margin: auto;">
+
+							<div class="3u">Wechat</div>
+							<div class="9u$">
+								<input type="text" name="wechat" value="10" />
+							</div>
+
+							<div class="3u">Alipay</div>
+							<div class="9u$">
+								<input type="text" name="alipay" value="10" />
+							</div>
+
+							<div class="3u">Campus</div>
+							<div class="9u$">
+								<input type="text" name="campus" value="10" />
+							</div>
+
+							<div class="12u$">
+								<input type="submit" style="width: 100%;" value="Add Checkpoint"/>
 							</div>
 						</div>
 				</form>

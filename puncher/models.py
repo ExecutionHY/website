@@ -62,7 +62,7 @@ class DailyTaskAdmin(admin.ModelAdmin):
 	list_display = ('date', 'user', 'taskNo')
 
 
-class CheckPoint(models.Model):
+class Checkpoint(models.Model):
 	user = models.ForeignKey(User, verbose_name="email")
 	wechat = models.FloatField(default=0)
 	alipay = models.FloatField(default=0)
@@ -100,12 +100,12 @@ class Payment(models.Model):
 		return str(self.id)
 
 
-class CheckPointAdmin(admin.ModelAdmin):
-	user = models.ForeignKey(CheckPoint, verbose_name="email")
-	wechat = models.ForeignKey(CheckPoint, verbose_name="wechat")
-	alipay = models.ForeignKey(CheckPoint, verbose_name="alipay")
-	campus = models.ForeignKey(CheckPoint, verbose_name="campus")
-	time = models.ForeignKey(CheckPoint, verbose_name="time")
+class CheckpointAdmin(admin.ModelAdmin):
+	user = models.ForeignKey(Checkpoint, verbose_name="email")
+	wechat = models.ForeignKey(Checkpoint, verbose_name="wechat")
+	alipay = models.ForeignKey(Checkpoint, verbose_name="alipay")
+	campus = models.ForeignKey(Checkpoint, verbose_name="campus")
+	time = models.ForeignKey(Checkpoint, verbose_name="time")
 	list_display = ('user', 'wechat', 'alipay', 'campus', 'time')
 
 

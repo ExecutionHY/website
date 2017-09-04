@@ -540,3 +540,7 @@ http://www.steegle.com/websites/google-sites-howtos/get-found-google-search#TOC-
 - 0.3 # data filter by date
 - 0.4 # slider design
 - 0.5 # slider design / mouse&touch
+- 0.6 # payment model
+- 1.0 # payment puncher
+- 1.1 # monthly data bar
+- 1.2 # execution's bill
