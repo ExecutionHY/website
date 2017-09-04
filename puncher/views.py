@@ -88,20 +88,30 @@ def puncher_daily(request):
 	print today.month, today.year, payments_this_month
 
 	bills = [0] * kind_list.first().id
-	monthly = 0
+	monthly_in = 0
+	monthly_out = 0
 	for payment in payments_this_month:
-		bills[payment.kind.id-1] += payment.value
-		monthly += payment.value
+		if payment.value < 0:
+			bills[payment.kind.id-1] += payment.value
+			monthly_out += payment.value
+		else:
+			monthly_in += payment.value
 
 	bill_list = []
 	for i in range(kind_list.first().id):
-		bill = {
-			'kind': PaymentKind.objects.get(id=i+1),
-			'index': i,
-			'sum': bills[i],
-			'percentage': bills[i] / monthly * 100
-		}
-		bill_list.append(bill)
+		if monthly_out == 0:
+			percentage = 0
+		else:
+			percentage = bills[i] / monthly_out * 100
+
+		if bills[i] < 0:
+			bill = {
+				'kind': PaymentKind.objects.get(id=i+1),
+				'index': i,
+				'sum': bills[i],
+				'percentage': percentage,
+			}
+			bill_list.append(bill)
 
 	if request.method == 'POST':
 		form = PaymentForm(request.POST)
@@ -126,7 +136,8 @@ def puncher_daily(request):
 		'todo_count': todo_count,
 
 		'amount': amount,
-		'monthly': monthly,
+		'monthly_in': monthly_in,
+		'monthly_out': monthly_out,
 		'kind_list': kind_list,
 		'bill_list': bill_list,
 		'today': today,
