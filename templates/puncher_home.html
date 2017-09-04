@@ -28,13 +28,27 @@
     </section>
 
 		<!-- display -->
-    <section id="display" class="white center">
+
+		<section id="money" class="white narrow center">
       <div class="container">
-
-				<a href="daily/">link</a>
-
+        <h3>Execution's Bill</h3>
+        <div class="row" style="margin: auto">
+		      <div class="6u"><h4>Monthly Out: ¥{{ monthly_out }}</h4></div>
+		      <div class="6u$"><h4>Monthly In: ¥{{ monthly_in }}</h4></div>
+        </div>
+	      <div class="row">
+		      <div class="1u">{{ today|date:"M" }}</div>
+	        <div class="11u$">
+		        {% for bill in bill_list %}
+	            <div class="colorblock c{{ bill.index }} thick databar" style="width: {{ bill.percentage }}%; color: white">
+		            {{ bill.kind }}: {{ bill.sum }}
+	            </div>
+		        {% endfor %}
+	        </div>
+	      </div>
       </div>
-    </section>
+
+		</section>
 
     <!-- Login -->
     <section id="list" class="body">
