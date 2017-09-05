@@ -89,12 +89,15 @@
 	margin-bottom: 0.3em;
 	text-align: center;
 	color: white;
+	text-after-overflow: black;
 }
 
 	.colorblock.thick {
 		min-height: 2em;
-		padding-bottom: 999px;
-		margin-bottom: -999px;
+	}
+
+	.colorblock.thick.done {
+		opacity: 1;
 	}
 
 	.colorblock.c0 {
@@ -130,14 +133,13 @@
 
 	.colorblock.databar {
 		float: left;
+		padding-bottom: 999px;
+		margin-bottom: -999px;
 	}
 
 .coloricon {
 	width: 1em;
     height: 1em;
-    -moz-border-radius: 0.5em;
-    -webkit-border-radius: 0.5em;
-    border-radius: 0.5em;
 	margin-top: 0.15em;
 	margin-left: 1em;
 	float: left;
@@ -149,9 +151,6 @@
 .coloricon-done {
 	width: 1em;
     height: 1em;
-    -moz-border-radius: 0.5em;
-    -webkit-border-radius: 0.5em;
-    border-radius: 0.5em;
 	margin-top: 0.15em;
 	margin-left: 1em;
 	float: left;

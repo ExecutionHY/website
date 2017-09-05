@@ -11,7 +11,7 @@ from models import User, UserTask, DailyTask, Checkpoint, Payment, PaymentKind
 
 def puncher_home(request):
 	# get the first user -- Execution
-	user = User.objects.last()
+	user = User.objects.first()
 
 	# ------- get some example display
 

@@ -40,7 +40,7 @@
 		      <div class="1u">{{ today|date:"M" }}</div>
 	        <div class="11u$">
 		        {% for bill in bill_list %}
-	            <div class="colorblock c{{ bill.index }} thick databar" style="width: {{ bill.percentage }}%; color: white">
+	            <div class="colorblock c{{ bill.index }} thick databar" style="width: {{ bill.percentage }}%;">
 		            {{ bill.kind }}: {{ bill.sum }}
 	            </div>
 		        {% endfor %}
