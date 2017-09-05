@@ -394,6 +394,30 @@ highlight这次怎么实现好呢。[http://peter-hoffmann.com/2012/python-markd
 
 关于配色主题，他也给出了许多方案，我选择了 github-gist 主题，还不错。
 
+#### line-numbering
+
+一开始我希望用插件实现，后来发现跟高亮插件的兼容性等都存在问题。后来在网上找了一个 js 代码，直接统计 code 的行数然后显示。
+
+```javascript
+//numbering for pre>code blocks
+$(function(){
+    $('pre code').each(function(){
+        var lines = $(this).text().split('\n').length - 1;
+        var $numbering = $('<div/>').addClass('pre-numbering');
+        $(this).addClass('has-numbering');
+        $(this).parent().prepend($numbering);
+
+        var str = "";
+        for(i = 1;i <= lines; i++){
+            str += i+"\n"
+        }
+        $numbering.html(str);
+    });
+});
+```
+
+我们用 css 属性 float 来实现两列并排，再加上一点 padding。
+
 ### 3.2 upload file
 
 正式发博之前，得实现图片上传功能。
@@ -476,13 +500,15 @@ css [https://www.w3schools.com/css/css3_pagination.asp](https://www.w3schools.co
 
 ## 4 远程部署
 
-```
+这条 bash 指令查看所有 bg process
+
+```shell
 ps -ef
 ```
 
-这条bash 指令查看所有 bg process
+这条指令让服务器无限后台运行
 
-```
+```shell
 nohup ./manage.py runserver 0.0.0.0:80 &
 ```
 
@@ -490,7 +516,7 @@ nohup ./manage.py runserver 0.0.0.0:80 &
 
 ### DEBUG
 
-发布自己的网站后记得把 setting.py 的 DEBUG 设置为 False。同时要设置好ALLOWED_HOSTS
+发布自己的网站后记得把 setting.py 的 DEBUG 设置为 False。同时要设置好 ALLOWED_HOSTS（其实可以用 \* 正则表示
 
 ```python
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -545,4 +571,24 @@ http://www.steegle.com/websites/google-sites-howtos/get-found-google-search#TOC-
 - 1.1 # monthly data bar
 - 1.2 # execution's bill
 - 1.3 # add checkpoint interface
+- 1.4 # todo list slider response
+
+
+
+
+## 6 Javascript Tips
+
+### Post
+
+发送数据到后端，Django 提供了一个 form 的模板，还算中规中矩，只是自由度感觉不高，因此要研究一下 js (Jquery/ajax) 的 post 交互方案。
+
+一开始以为用 ajax 的 post 可以很简单，结果 403，后来发现 form 在提交的时候必须携带 csrf 的值，于是乎我就直接把这个值给扒来了。（这个值的来源是后面其他 form 中的 {% csrf_token %} 标签）
+
+```javascript
+function punch() {
+    var task = obj_.id[4];
+    var csrftoken = document.getElementsByName("csrfmiddlewaretoken").item(0).value;
+    $.post('', {'taskNo': task, 'csrfmiddlewaretoken': csrftoken });
+}
+```
 

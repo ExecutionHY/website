@@ -38,6 +38,7 @@
 					var list;
 					var touch_before, touch_after, x_before, x_after;
 
+					// init the widegts
 					window.onload = function() {
 						list = document.getElementsByClassName("coloricon");
 						for (let i = 0; i < list.length; i++) {
@@ -46,15 +47,15 @@
 						}
 					}
 
-
 					var drag_ = false;
 					var D = new Function('obj', 'return document.getElementById(obj);');
 					var oevent = new Function('e', 'if (!e) e = window.event;return e');
 					var fw = document.getElementById("todo-container").clientWidth;
-					var offset_, obj_;
+					var offset_, obj_;  // global variables for set()
 
+					// when mouse or finger down
 					function down(obj) {
-						if (drag_ == true) setInterval(Set_obj, 30);
+						if (drag_ == true) setInterval(set, 30);
 						drag_ = true;
 						obj_ = obj;
 						x_before = obj_.clientLeft;
@@ -64,30 +65,34 @@
 
 						document.addEventListener("mousemove", function() { move(); }, false);
 						document.addEventListener("touchmove", function() { move(); }, false);
-						document.addEventListener("mouseup", function() {drag_ = false; setInterval(Set_obj, 30);}, false);
-						document.addEventListener("touchend", function() {drag_ = false; setInterval(Set_obj, 30);}, false);
+						document.addEventListener("mouseup", function() {drag_ = false; setInterval(set, 30);}, false);
+						document.addEventListener("touchend", function() {drag_ = false; setInterval(set, 30);}, false);
 					}
 
+					// when mouse or finger move
 					function move() {
 						if (!drag_) return;
-						if (obj_.style.color == "white") return;
 
 						if (event.touches) touch_after = event.touches[0].clientX;
 						else touch_after = event.clientX;
-						console.log(event);
 
-						offset_ = (x_before + touch_after- touch_before)/fw*100;
+						offset_ = (x_before + touch_after - touch_before)/fw*100;
 						if (offset_ > 88) offset_ = 90 - 176 / offset_; // smooth
 						obj_.style.left = offset_ + "%";
 
 					}
 
-	        function Set_obj() {
+					// set the position when release
+	        function set() {
 		        if (offset_ <= 0) return;
 		        if (offset_ >= 90) {
 			        obj_.firstElementChild.className = "icon fa-chevron-circle-down";
-		          obj_.style.color = "white";
+			        punch();
 			        offset_ = 0;
+
+			        obj_.className = "coloricon-done";
+			        obj_.removeEventListener("mousedown", function() { down(list[i]); });
+					    obj_.removeEventListener("touchstart", function() { down(list[i]); });
 			        return;
 		        }
 		        if (offset_ >= 60) {
@@ -100,12 +105,22 @@
 		        obj_.style.left = offset_ + "%";
 	        }
 
+	        // finish one task
+	        function punch() {
+		        var task = obj_.id[4];
+		        var csrftoken = document.getElementsByName("csrfmiddlewaretoken").item(0).value;
+		        $.post('', {'taskNo': task, 'csrfmiddlewaretoken': csrftoken });
+	        }
 
 				</script>
 	      {% for todo in todo_list %}
-		      <div class="coloricon" id="icon{{ todo.task.number }}" style="position: relative;"><span class="icon fa-circle-o"></span></div>
+		      {% if todo.delta == 0 %}
+            <div class="coloricon-done" id="icon{{ todo.task.number }}"><span class="icon fa-chevron-circle-down"></span></div>
+		      {% else %}
+            <div class="coloricon" id="icon{{ todo.task.number }}"><span class="icon fa-circle-o"></span></div>
+		      {% endif %}
 
-	        <div class="colorblock c{{ todo.task.number }} thick" style="text-align: center; color: white">
+	        <div class="colorblock c{{ todo.task.number }} thick" style="">
 		        {{ todo.task.task }} | {{ todo.delta }} / {{ todo.task.interval }}
 	        </div>
 	      {% endfor %}
@@ -148,7 +163,7 @@
 		      <div class="1u">{{ today|date:"M" }}</div>
 	        <div class="11u$">
 		        {% for bill in bill_list %}
-	            <div class="colorblock c{{ bill.index }} thick databar" style="width: {{ bill.percentage }}%; color: white">
+	            <div class="colorblock c{{ bill.index }} thick databar" style="width: {{ bill.percentage }}%;">
 		            {{ bill.kind }}: {{ bill.sum }}
 	            </div>
 		        {% endfor %}

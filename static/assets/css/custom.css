@@ -85,12 +85,16 @@
 /* colorblock  */
 
 .colorblock {
-	height: 1em;
+	min-height: 1em;
 	margin-bottom: 0.3em;
+	text-align: center;
+	color: white;
 }
 
 	.colorblock.thick {
-		height: 2em;
+		min-height: 2em;
+		padding-bottom: 999px;
+		margin-bottom: -999px;
 	}
 
 	.colorblock.c0 {
@@ -135,9 +139,26 @@
     -webkit-border-radius: 0.5em;
     border-radius: 0.5em;
 	margin-top: 0.15em;
-	margin-left: 0.5em;
+	margin-left: 1em;
 	float: left;
+	position: relative;
+
 	color: #fffffe;
+}
+
+.coloricon-done {
+	width: 1em;
+    height: 1em;
+    -moz-border-radius: 0.5em;
+    -webkit-border-radius: 0.5em;
+    border-radius: 0.5em;
+	margin-top: 0.15em;
+	margin-left: 1em;
+	float: left;
+	position: relative;
+
+	color: white;
+	left: 90%;
 }
 
 .unselectable {

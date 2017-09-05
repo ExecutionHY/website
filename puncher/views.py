@@ -13,7 +13,7 @@ def puncher_home(request):
 	# get the first user -- Execution
 	user = User.objects.last()
 
-	# get some example display
+	# ------- get some example display
 
 	checkpoint = Checkpoint.objects.filter(user=user).last()
 	amount = checkpoint.wechat + checkpoint.alipay + checkpoint.campus
@@ -25,7 +25,7 @@ def puncher_home(request):
 	payments_this_month = Payment.objects.filter(user=user, time__year=today.year, time__month=today.month)
 	kind_list = PaymentKind.objects.all()
 
-	bills = [0] * kind_list.first().id
+	bills = [0] * kind_list.last().id
 	monthly_in = 0
 	monthly_out = 0
 	for payment in payments_this_month:
@@ -36,7 +36,7 @@ def puncher_home(request):
 			monthly_in += payment.value
 
 	bill_list = []
-	for i in range(kind_list.first().id):
+	for i in range(kind_list.last().id):
 		if monthly_out == 0:
 			percentage = 0
 		else:
@@ -50,6 +50,8 @@ def puncher_home(request):
 				'percentage': percentage,
 			}
 			bill_list.append(bill)
+
+	# ------ end of example display
 
 	# deal with login request
 	if request.method == 'POST':
@@ -98,6 +100,7 @@ class CheckpointForm(forms.Form):
 
 
 def puncher_daily(request):
+
 	# get user
 	if 'uid' in request.GET:
 		uid = request.GET.get('uid')
@@ -114,16 +117,12 @@ def puncher_daily(request):
 
 	# tasks for recent 6 days, divided by day
 	tasks = DailyTask.objects.filter(user=user)
-	today_min = datetime.datetime.combine(datetime.date.today(), datetime.time.min)
-	today_max = datetime.datetime.combine(datetime.date.today(), datetime.time.max)
 	today = datetime.date.today()
-	days = []
+	days = []   # each day include some tasks
 	dates = []
 	for i in range(5, -1, -1):
-		this_min = today_min - datetime.timedelta(days=i)
-		this_max = today_max - datetime.timedelta(days=i)
 		this_day = today - datetime.timedelta(days=i)
-		day = tasks.filter(date__range=(this_min, this_max))
+		day = tasks.filter(date__year=this_day.year, date__month=this_day.month, date__day=this_day.day)
 		days.append(day)
 		dates.append(this_day)
 
@@ -134,7 +133,7 @@ def puncher_daily(request):
 	for task in my_tasks:
 		last_task = tasks.filter(taskNo=task.number).last()
 		if last_task is None:
-			delta = 0
+			delta = task.interval
 		else:
 			last_date = last_task.date.date()
 			delta = (today - last_date).days
@@ -149,7 +148,7 @@ def puncher_daily(request):
 	todo_list = sorted(todo_list, key=lambda todo: -float(todo['delta'] / float(todo['task'].interval)))
 
 	# get current money amount
-	checkpoint = Checkpoint.objects.filter(user=user).first()
+	checkpoint = Checkpoint.objects.filter(user=user).last()
 	amount = checkpoint.wechat + checkpoint.alipay + checkpoint.campus
 	payments_after_check = Payment.objects.filter(user=user, time__gt=checkpoint.time)
 	for payment in payments_after_check:
@@ -160,7 +159,7 @@ def puncher_daily(request):
 
 	# the last kind is list on the top
 	# sum up money-in & out for this month
-	last_kind_id = PaymentKind.objects.first().id
+	last_kind_id = PaymentKind.objects.last().id
 	bills = [0] * last_kind_id
 	monthly_in = 0
 	monthly_out = 0
@@ -190,6 +189,12 @@ def puncher_daily(request):
 
 	# deal with request of adding payment & checkpoint
 	if request.method == 'POST':
+		new_taskNo = request.POST.get('taskNo')
+		if new_taskNo:
+			DailyTask.objects.create(user=user, taskNo=new_taskNo)
+			# refresh the page
+			return HttpResponseRedirect('?uid=' + uid + '&pwd=' + pwd)
+
 		form = PaymentForm(request.POST)
 		if form.is_valid():
 			# get payment data
@@ -202,8 +207,10 @@ def puncher_daily(request):
 			# create new payment
 			Payment.objects.create(user=user, info=info, value=value, kind=kind, time=time)
 
+			# refresh the page
 			return HttpResponseRedirect('?uid=' + uid + '&pwd=' + pwd)
 
+		# another kind of form
 		else:
 			form = CheckpointForm(request.POST)
 
@@ -221,7 +228,7 @@ def puncher_daily(request):
 					kind_patch = PaymentKind.objects.get(kind="other")
 					Payment.objects.create(user=user, info="patch", value=amount_current - amount,
 					                       kind=kind_patch, time=datetime.datetime.now())
-
+				# refresh
 				return HttpResponseRedirect('?uid=' + uid + '&pwd=' + pwd)
 
 	ctx = {
