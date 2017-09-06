@@ -578,6 +578,7 @@ http://www.steegle.com/websites/google-sites-howtos/get-found-google-search#TOC-
 - 1.2 # execution's bill
 - 1.3 # add checkpoint interface
 - 1.4 # todo list slider response
+- 1.5 # money data instruction
 
 
 
