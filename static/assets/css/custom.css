@@ -175,3 +175,7 @@
 .pre-numbering {
 	float: left;
 }
+
+.row-item-close {
+	padding-left: 0.1em;
+}
