@@ -512,6 +512,12 @@ ps -ef
 nohup ./manage.py runserver 0.0.0.0:80 &
 ```
 
+在这个文件中加入shell 代码来开机运行。
+
+```
+/etc/rc.local
+```
+
 迁徙的方法是git clone 之后 git pull，非常方便。
 
 ### DEBUG

@@ -117,7 +117,7 @@
 	      {% for todo in todo_list %}
 		      {% if todo.delta == 0 %}
             <div class="coloricon-done" id="icon{{ todo.task.number }}"><span class="icon fa-chevron-circle-down"></span></div>
-		        <div class="colorblock c{{ todo.task.number }} thick done" style="color: black;">
+		        <div class="colorblock c{{ todo.task.number }} thick done">
 			        {{ todo.task.task }} | {{ todo.delta }} / {{ todo.task.interval }}
 		        </div>
 		      {% else %}
@@ -163,6 +163,15 @@
         <div class="row" style="margin: auto">
 		      <div class="6u"><h4>Monthly Out: ¥{{ monthly_out }}</h4></div>
 		      <div class="6u$"><h4>Monthly In: ¥{{ monthly_in }}</h4></div>
+        </div>
+
+
+        <div class="row" style="margin: auto">
+	        {% for bill in bill_list %}
+	          <div class="2u">
+		          <div class="colorblock c{{ bill.index }} thick" style="margin-right: 0.3em">{{ bill.kind }}</div>
+	          </div>
+	        {% endfor %}
         </div>
 
 	      <div class="row">
