@@ -27,6 +27,29 @@
         </div>
     </section>
 
+
+		<!-- Display -->
+    <section id="display" class="white narrow center unselectable">
+      <div class="container">
+	      <div class="row">
+		      {% for date in dates %}
+		        <div class="2u" style="text-align: center; font-size: smaller">{{ date|date:"M-d" }}</div>
+		      {% endfor %}
+	      </div>
+
+				<div class="row">
+					{% for day in days %}
+	          <div class="2u">
+	            {% for task in day %}
+		            <div class="colorblock c{{ task.taskNo }}"></div>
+	            {% endfor %}
+	          </div>
+					{% endfor %}
+				</div>
+
+      </div>
+    </section>
+
 		<!-- display -->
 
 		<section id="money" class="white narrow center">
@@ -48,7 +71,7 @@
 	        <div class="11u$">
 		        {% for bill in bill_list %}
 	            <div class="colorblock c{{ bill.index }} thick databar" style="width: {{ bill.percentage }}%;">
-		            {{ bill.kind }}: {{ bill.sum }}
+		            {{ bill.sum }} - {{ bill.kind }}
 	            </div>
 		        {% endfor %}
 	        </div>

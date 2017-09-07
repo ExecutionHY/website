@@ -15,6 +15,18 @@ def puncher_home(request):
 
 	# ------- get some example display
 
+	# tasks for recent 6 days, divided by day
+	tasks = DailyTask.objects.filter(user=user)
+	today = datetime.date.today()
+	days = []   # each day include some tasks
+	dates = []
+	for i in range(5, -1, -1):
+		this_day = today - datetime.timedelta(days=i)
+		day = tasks.filter(date__year=this_day.year, date__month=this_day.month, date__day=this_day.day)
+		days.append(day)
+		dates.append(this_day)
+
+	# money
 	checkpoint = Checkpoint.objects.filter(user=user).last()
 	amount = checkpoint.wechat + checkpoint.alipay + checkpoint.campus
 	payments_after_check = Payment.objects.filter(user=user, time__gt=checkpoint.time)
@@ -46,7 +58,7 @@ def puncher_home(request):
 			bill = {
 				'kind': PaymentKind.objects.get(id=i + 1),
 				'index': i,
-				'sum': bills[i],
+				'sum': -bills[i],
 				'percentage': percentage,
 			}
 			bill_list.append(bill)
@@ -67,6 +79,9 @@ def puncher_home(request):
 		msg = None
 
 	ctx = {
+		'days': days,
+		'dates': dates,
+
 		'monthly_in': monthly_in,
 		'monthly_out': monthly_out,
 		'kind_list': kind_list,
@@ -128,7 +143,6 @@ def puncher_daily(request):
 
 	# to_do list for today
 	todo_list = []
-	todo_count = 0
 	my_tasks = UserTask.objects.filter(user=user)
 	for task in my_tasks:
 		last_task = tasks.filter(taskNo=task.number).last()
@@ -143,7 +157,6 @@ def puncher_daily(request):
 			'delta': delta,
 		}
 		todo_list.append(todo)
-		todo_count += 1
 
 	todo_list = sorted(todo_list, key=lambda todo: -float(todo['delta'] / float(todo['task'].interval)))
 
@@ -182,7 +195,7 @@ def puncher_daily(request):
 			bill = {
 				'kind': PaymentKind.objects.get(id=i + 1),
 				'index': i,
-				'sum': bills[i],
+				'sum': -bills[i],
 				'percentage': percentage,
 			}
 			bill_list.append(bill)
@@ -236,7 +249,6 @@ def puncher_daily(request):
 		'days': days,
 		'dates': dates,
 		'todo_list': todo_list,
-		'todo_count': todo_count,
 
 		'amount': amount,
 		'monthly_in': monthly_in,
