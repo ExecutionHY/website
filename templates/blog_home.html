@@ -9,15 +9,28 @@
 {% endblock %}
 
 {% block sidebar %}
-    {% if is_search %} <!-- search page -->
+
+    {% if category %}
+		  <li><a href="/blog" id="blog-link" class="skel-layers-ignoreHref">
+		      <span class="icon fa-arrow-left">Blog</span></a></li>
+		  <br />
+
+      {% for cat in categories %}
+        <li><a href="{{ cat.get_absolute_url }}" class="skel-layers-ignoreHref
+            {% if cat == category %}active{% endif %}">
+            <span class="icon fa-circle-o">{{ cat }}</span></a></li>
+      {% endfor %}
+    {% else %}
+			{% if is_search %} <!-- search page -->
         <li><a href="/blog" id="blog-link" class="skel-layers-ignoreHref"><span class="icon fa-arrow-left">Blog</span></a></li>
-    {% else %}  <!-- home page -->
+	    {% else %}  <!-- home page -->
         <li><a href="/" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
-    {% endif %}
-    <li><a href="#search" id="search-link" class="skel-layers-ignoreHref"><span class="icon fa-search">Search</span></a></li>
-    <li><a href="#list" id="list-link" class="skel-layers-ignoreHref"><span class="icon fa-list">List</span></a></li>
-    <br />
-    <li><a href="/admin/blog/post/add/" id="add-link" class="skel-layers-ignoreHref"><span class="icon fa-plus">New Post</span></a></li>
+	    {% endif %}
+	    <li><a href="#search" id="search-link" class="skel-layers-ignoreHref"><span class="icon fa-search">Search</span></a></li>
+	    <li><a href="#list" id="list-link" class="skel-layers-ignoreHref"><span class="icon fa-list">List</span></a></li>
+	    <br />
+	    <li><a href="/admin/blog/post/add/" id="add-link" class="skel-layers-ignoreHref"><span class="icon fa-plus">New Post</span></a></li>
+		{% endif %}
 
 {% endblock %}
 
@@ -27,23 +40,39 @@
     <!-- Search -->
     <section id="search" class="top dark center">
         <div class="container">
-            {% if is_search %}
-                <header><h2>Search Results for '{{ keyword }}'</h2></header>
+
+			    {% if category %}
+		        <section id="category" class="top dark center" height="100px">
+		            <header><h2>Category: {{ category }}</h2></header>
+		        </section>
+			    {% else %}
+				    {% if is_search %}
+              <header><h2>Search Results for '{{ keyword }}'</h2></header>
             {% else %}
-                <header><h2>Blog</h2></header>
+              <header><h2>Blog</h2></header>
             {% endif %}
             <form method="get" action="/blog/search/">
-                {% csrf_token %}
-                <div class="row">
-                    <div class="12u$"><input type="search" name="q" placeholder="Search..." /></div>
-                </div>
+              {% csrf_token %}
+              <div class="row">
+                  <div class="12u$"><input type="search" name="q" placeholder="Search..." /></div>
+              </div>
             </form>
+			    {% endif %}
+
         </div>
     </section>
 
     <!-- List -->
-    <section id="list" class="body">
+    <section id="list" class="body" style="padding-top: 0.5em;">
         <div class="container">
+
+          <div id="option-box" style="padding-bottom: 3em;">
+		        <div class="option" style="float: right; border: medium solid dimgray; font-size: smaller">
+		          {% for opt in options %}
+		            <a {% if opt.num == option %}class="active"{% endif %} href="?page={{ posts.number }}&option={{ opt.num }}">{{ opt.info }}</a>
+		          {% endfor %}
+		        </div>
+          </div>
 
             {% for post in posts %}
             <div class="post">
@@ -67,7 +96,7 @@
             {% if posts.has_other_pages %}
 						  <div class="pagination">
 						    {% if posts.has_previous %}
-						      <a href="?page={{ posts.previous_page_number }}">&laquo;</a>
+						      <a href="?page={{ posts.previous_page_number }}&option={{ option }}">&laquo;</a>
 						    {% else %}
 						      <a class="disabled"><span>&laquo;</span></a>
 						    {% endif %}
@@ -75,11 +104,11 @@
 						      {% if posts.number == i %}
 						        <a class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></a>
 						      {% else %}
-						        <a href="?page={{ i }}">{{ i }}</a>
+						        <a href="?page={{ i }}&option={{ option }}">{{ i }}</a>
 						      {% endif %}
 						    {% endfor %}
 						    {% if posts.has_next %}
-						      <a href="?page={{ posts.next_page_number }}">&raquo;</a>
+						      <a href="?page={{ posts.next_page_number }}&option={{ option }}">&raquo;</a>
 						    {% else %}
 						      <a class="disabled"><span>&raquo;</span></a>
 						    {% endif %}

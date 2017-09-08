@@ -7,12 +7,21 @@ from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 
+options = [{"num": 0, "info": "Public Time", "sys": "-publication_date"},
+           {"num": 1, "info": "Modify Time", "sys": "-modification_date"},
+           ]
+
 
 def blog_home(request):
-	post_list = Post.objects.all()
 	page = request.GET.get('page', 1)
+	option = request.GET.get('option', 1)
+	if not option:
+		option = 0
+	else:
+		option = int(option)
+	post_list = Post.objects.all().order_by(options[option].get('sys'))
 
-	paginator = Paginator(post_list, 10)
+	paginator = Paginator(post_list, 2)
 	try:
 		posts = paginator.page(page)
 	except PageNotAnInteger:
@@ -22,6 +31,8 @@ def blog_home(request):
 
 	ctx = {
 		"posts": posts,
+		"option": option,
+		"options": options,
 	}
 
 	return render_to_response(
@@ -70,7 +81,7 @@ def blog_category(request, pk):
 	}
 
 	return render_to_response(
-		'blog_display.html',
+		'blog_home.html',
 		ctx,
 		context_instance=RequestContext(request)
 	)

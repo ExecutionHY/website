@@ -80,6 +80,27 @@
 
 .pagination a:hover:not(.active) {background-color: gainsboro;}
 
+/* option */
+
+.option {
+    display: inline-block;
+}
+
+.option a {
+    color: black;
+    float: left;
+    padding: 4px 8px;
+    text-decoration: none;
+	border-bottom: thin;
+}
+
+.option a.active {
+    background-color: orange;
+    color: white;
+}
+
+.option a:hover:not(.active) {background-color: gainsboro;}
+
 /* For puncher */
 
 /* colorblock  */
