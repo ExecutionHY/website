@@ -21,7 +21,7 @@ def blog_home(request):
 		option = int(option)
 	post_list = Post.objects.all().order_by(options[option].get('sys'))
 
-	paginator = Paginator(post_list, 2)
+	paginator = Paginator(post_list, 10)
 	try:
 		posts = paginator.page(page)
 	except PageNotAnInteger:
