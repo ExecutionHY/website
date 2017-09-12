@@ -67,6 +67,7 @@ class Checkpoint(models.Model):
 	wechat = models.FloatField(default=0)
 	alipay = models.FloatField(default=0)
 	campus = models.FloatField(default=0)
+	cash = models.FloatField(default=0)
 	time = models.DateTimeField(auto_now_add=True)
 
 	class Meta:

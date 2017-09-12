@@ -5,7 +5,6 @@ from django import forms
 
 from models import User, UserTask, DailyTask, Checkpoint, Payment, PaymentKind
 
-
 # Create your views here.
 
 
@@ -38,14 +37,11 @@ def puncher_home(request):
 	kind_list = PaymentKind.objects.all()
 
 	bills = [0] * kind_list.last().id
-	monthly_in = 0
 	monthly_out = 0
 	for payment in payments_this_month:
 		if payment.value < 0:
 			bills[payment.kind.id - 1] += payment.value
 			monthly_out += payment.value
-		else:
-			monthly_in += payment.value
 
 	bill_list = []
 	for i in range(kind_list.last().id):
@@ -82,7 +78,6 @@ def puncher_home(request):
 		'days': days,
 		'dates': dates,
 
-		'monthly_in': monthly_in,
 		'monthly_out': monthly_out,
 		'kind_list': kind_list,
 		'bill_list': bill_list,
@@ -112,6 +107,7 @@ class CheckpointForm(forms.Form):
 	wechat = forms.FloatField()
 	alipay = forms.FloatField()
 	campus = forms.FloatField()
+	cash = forms.FloatField()
 
 
 def puncher_daily(request):
@@ -232,9 +228,10 @@ def puncher_daily(request):
 				wechat = form.cleaned_data['wechat']
 				alipay = form.cleaned_data['alipay']
 				campus = form.cleaned_data['campus']
+				cash = form.cleaned_data['cash']
 
 				# create new checkpoint
-				Checkpoint.objects.create(user=user, wechat=wechat, alipay=alipay, campus=campus)
+				Checkpoint.objects.create(user=user, wechat=wechat, alipay=alipay, campus=campus, cash=cash)
 				# create a patch payment
 				amount_current = wechat + alipay + campus
 				if amount_current != amount:
@@ -260,6 +257,7 @@ def puncher_daily(request):
 		'last_wechat': checkpoint.wechat,
 		'last_alipay': checkpoint.alipay,
 		'last_campus': checkpoint.campus,
+		'last_cash': checkpoint.cash,
 	}
 
 	return render_to_response(
