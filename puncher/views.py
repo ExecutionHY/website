@@ -158,7 +158,7 @@ def puncher_daily(request):
 
 	# get current money amount
 	checkpoint = Checkpoint.objects.filter(user=user).last()
-	amount = checkpoint.wechat + checkpoint.alipay + checkpoint.campus
+	amount = checkpoint.wechat + checkpoint.alipay + checkpoint.campus + checkpoint.cash
 	payments_after_check = Payment.objects.filter(user=user, time__gt=checkpoint.time)
 	for payment in payments_after_check:
 		amount += payment.value
