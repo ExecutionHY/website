@@ -233,7 +233,7 @@ def puncher_daily(request):
 				# create new checkpoint
 				Checkpoint.objects.create(user=user, wechat=wechat, alipay=alipay, campus=campus, cash=cash)
 				# create a patch payment
-				amount_current = wechat + alipay + campus
+				amount_current = wechat + alipay + campus + cash
 				if amount_current != amount:
 					kind_patch = PaymentKind.objects.get(kind="other")
 					Payment.objects.create(user=user, info="patch", value=amount_current - amount,

@@ -7,14 +7,14 @@ from django.core.files.storage import FileSystemStorage
 
 # Create your views here.
 
-options = [{"num": 0, "info": "Public Time", "sys": "-publication_date"},
-           {"num": 1, "info": "Modify Time", "sys": "-modification_date"},
+options = [{'num': 0, 'info': "Public Time", 'sys': "-publication_date"},
+           {'num': 1, 'info': "Modify Time", 'sys': "-modification_date"},
            ]
 
 
 def blog_home(request):
 	page = request.GET.get('page', 1)   # default = 1
-	option = request.GET.get('option', 0)   # default = 0
+	option = int(request.GET.get('option', 0))   # default = 0
 	post_list = Post.objects.all().order_by(options[option].get('sys'))
 
 	paginator = Paginator(post_list, 10)
