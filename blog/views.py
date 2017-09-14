@@ -128,6 +128,9 @@ def blog_search(request):
 # upload files, overwrite
 def blog_upload(request, post_pk):
 
+	back_url = request.POST['back_url']
+	print back_url, request
+
 	if request.method == 'POST' and request.FILES['upload_image']:
 		file = request.FILES['upload_image']
 		fs = FileSystemStorage()
@@ -136,6 +139,6 @@ def blog_upload(request, post_pk):
 			fs.delete(filename)
 		fs.save(filename, file)
 		uploaded_url = fs.url(filename)
-		return HttpResponse('File upload success at ' + uploaded_url)
+		return HttpResponseRedirect(back_url+'?success='+uploaded_url)
 
-	return HttpResponse('File upload failed.')
+	return HttpResponseRedirect(back_url+'?failure')

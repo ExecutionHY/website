@@ -6,8 +6,9 @@
 		{% csrf_token %}
 		<input type="file" name="upload_image" id="upload_image">
 		<button type="submit" id="upload_button" value="Upload Image" name="upload">Upload Image</button>
-		<img src="{{ url }}">
+		<input type="hidden" name="back_url" value="{{ request.path }}">
   </form>
+	<p>{{ request }}</p>
 	<!--
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
