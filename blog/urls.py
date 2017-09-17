@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^post/(?P<pk>\d+)/$', 'blog.views.blog_post', name='blog_post'),
     url(r'^upload/admin/blog/post/(?P<post_pk>\d+)/$', 'blog.views.blog_upload', name='blog_upload'),
     url(r'^category/(?P<pk>\d+)/$', 'blog.views.blog_category', name='blog_category'),
+    url(r'^tag/(?P<pk>\d+)/$', 'blog.views.blog_tag', name='blog_tag'),
     url(r'^search/$', 'blog.views.blog_search', name='blog_search'),
 ]

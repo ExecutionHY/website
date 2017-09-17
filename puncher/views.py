@@ -10,7 +10,7 @@ from models import User, UserTask, DailyTask, Checkpoint, Payment, PaymentKind
 
 def puncher_home(request):
 	# get the first user -- Execution
-	user = User.objects.first()
+	user = User.objects.order_by('id').first()
 
 	# ------- get some example display
 
@@ -26,7 +26,9 @@ def puncher_home(request):
 		dates.append(this_day)
 
 	# money
-	checkpoint = Checkpoint.objects.filter(user=user).last()
+	checkpoint_list = Checkpoint.objects.order_by('time')
+	checkpoint = checkpoint_list.filter(user=user).last()
+	print checkpoint_list.filter(user=user)
 	amount = checkpoint.wechat + checkpoint.alipay + checkpoint.campus
 	payments_after_check = Payment.objects.filter(user=user, time__gt=checkpoint.time)
 	for payment in payments_after_check:
@@ -141,7 +143,7 @@ def puncher_daily(request):
 	todo_list = []
 	my_tasks = UserTask.objects.filter(user=user)
 	for task in my_tasks:
-		last_task = tasks.filter(taskNo=task.number).last()
+		last_task = tasks.filter(taskNo=task.number).order_by('date').last()
 		if last_task is None:
 			delta = task.interval
 		else:
@@ -157,7 +159,7 @@ def puncher_daily(request):
 	todo_list = sorted(todo_list, key=lambda todo: -float(todo['delta'] / float(todo['task'].interval)))
 
 	# get current money amount
-	checkpoint = Checkpoint.objects.filter(user=user).last()
+	checkpoint = Checkpoint.objects.filter(user=user).order_by('time').last()
 	amount = checkpoint.wechat + checkpoint.alipay + checkpoint.campus + checkpoint.cash
 	payments_after_check = Payment.objects.filter(user=user, time__gt=checkpoint.time)
 	for payment in payments_after_check:

@@ -1,6 +1,6 @@
 from django.shortcuts import render, render_to_response, get_object_or_404, HttpResponse, HttpResponseRedirect
 from django.template import RequestContext
-from blog.models import Post, Category
+from blog.models import Post, Category, Tag
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 from django.core.files.storage import FileSystemStorage
@@ -74,6 +74,35 @@ def blog_category(request, pk):
 		"categories": categories,
 		"category": category,
 		"posts": posts
+	}
+
+	return render_to_response(
+		'blog_home.html',
+		ctx,
+		context_instance=RequestContext(request)
+	)
+
+
+def blog_tag(request, pk):
+	tag = get_object_or_404(Tag, pk=pk)
+	tags = Tag.objects.all()
+
+	post_list = tag.post_set.all()
+
+	# pagination part
+	page = request.GET.get('page', 1)
+	paginator = Paginator(post_list, 10)
+	try:
+		posts = paginator.page(page)
+	except PageNotAnInteger:
+		posts = paginator.page(1)
+	except EmptyPage:
+		posts = paginator.page(paginator.num_pages)
+
+	ctx = {
+		"tag": tag,
+		"tags": tags,
+		"posts": posts,
 	}
 
 	return render_to_response(

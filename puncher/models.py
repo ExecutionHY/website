@@ -11,7 +11,7 @@ class User(models.Model):
 	password = models.CharField(max_length=64)
 
 	class Meta:
-		ordering = ['id']
+		ordering = ['-id']
 
 	def __unicode__(self):
 		return str(self.email)
@@ -36,7 +36,7 @@ class DailyTask(models.Model):
 	taskNo = models.CharField(max_length=1)
 
 	class Meta:
-		ordering = ['id']
+		ordering = ['-id']
 
 	def __unicode__(self):
 		return str(self.id)
@@ -71,7 +71,7 @@ class Checkpoint(models.Model):
 	time = models.DateTimeField(auto_now_add=True)
 
 	class Meta:
-		ordering = ['id']
+		ordering = ['-id']
 
 	def __unicode__(self):
 		return str(self.id)
@@ -95,7 +95,7 @@ class Payment(models.Model):
 	time = models.DateTimeField()
 
 	class Meta:
-		ordering = ['id']
+		ordering = ['-id']
 
 	def __unicode__(self):
 		return str(self.id)

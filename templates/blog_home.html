@@ -10,7 +10,7 @@
 
 {% block sidebar %}
 
-    {% if category %}
+    {% if category or tag %}
 		  <li><a href="/blog" id="blog-link" class="skel-layers-ignoreHref">
 		      <span class="icon fa-arrow-left">Blog</span></a></li>
 		  <br />
@@ -44,6 +44,10 @@
 			    {% if category %}
 		        <section id="category" class="top dark center" height="100px">
 		            <header><h2>Category: {{ category }}</h2></header>
+		        </section>
+			    {% elif tag %}
+				    <section id="category" class="top dark center" height="100px">
+		            <header><h2>Tag: {{ tag }}</h2></header>
 		        </section>
 			    {% else %}
 				    {% if is_search %}

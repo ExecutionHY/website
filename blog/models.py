@@ -29,7 +29,7 @@ class Tag(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return 'tag', (), {'pk': self.pk}
+        return 'blog_tag', (), {'pk': self.pk}
 
 
 class Post(models.Model):
