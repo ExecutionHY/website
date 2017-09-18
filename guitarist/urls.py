@@ -15,16 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from settings import STATIC_ROOT
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
-    url(r'^static/(?P<path>.*)', 'django.views.static.serve', {'document_root': STATIC_ROOT}),
-
-    url(r'^$', 'website.views.home', name='home'),
-    url(r'^blog/', include('blog.urls')),
-    url(r'^facer/', include('facer.urls')),
-    url(r'^puncher/', include('puncher.urls')),
-    url(r'^guitarist/', include('guitarist.urls')),
-    url(r'^composer/$', 'composer.views.composer_home', name='composer_home'),
+    url(r'^$', 'guitarist.views.guitarist_home', name='guitarist_home'),
 ]
