@@ -106,8 +106,9 @@ class CheckpointAdmin(admin.ModelAdmin):
 	wechat = models.ForeignKey(Checkpoint, verbose_name="wechat")
 	alipay = models.ForeignKey(Checkpoint, verbose_name="alipay")
 	campus = models.ForeignKey(Checkpoint, verbose_name="campus")
+	cash = models.ForeignKey(Checkpoint, verbose_name="cash")
 	time = models.ForeignKey(Checkpoint, verbose_name="time")
-	list_display = ('user', 'wechat', 'alipay', 'campus', 'time')
+	list_display = ('user', 'wechat', 'alipay', 'campus', 'cash', 'time')
 
 
 class PaymentKindAdmin(admin.ModelAdmin):
