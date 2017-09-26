@@ -178,7 +178,7 @@
 		      <div class="1u">{{ today|date:"M" }}</div>
 	        <div class="11u$">
 		        {% for bill in bill_list %}
-	            <div class="colorblock c{{ bill.index }} thick databar" style="width: {{ bill.percentage }}%;">
+	            <div class="colorblock c{{ bill.index }} thick databar" style="width: {{ bill.percentage }}%; font-size: small; height: 2.8em;">
 		            {{ bill.sum }} - {{ bill.kind }}
 	            </div>
 		        {% endfor %}
