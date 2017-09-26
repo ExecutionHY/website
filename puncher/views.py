@@ -28,7 +28,6 @@ def puncher_home(request):
 	# money
 	checkpoint_list = Checkpoint.objects.order_by('time')
 	checkpoint = checkpoint_list.filter(user=user).last()
-	print checkpoint_list.filter(user=user)
 	amount = checkpoint.wechat + checkpoint.alipay + checkpoint.campus
 	payments_after_check = Payment.objects.filter(user=user, time__gt=checkpoint.time)
 	for payment in payments_after_check:
